@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Environment files (สำคัญมาก - ห้าม upload)
+.env
+.env.local
+.env.production.local
+Source/backend/.env
+
+# Database files (ไฟล์ใหญ่เกิน)
+Source/backend/database.sqlite
+Source/backend/LED_Advisor.db
+Source/backend/data.db
+*.sqlite
+*.db
+
+# Build output
+Source/frontend/dist/
+Source/frontend/.vite/
+
+# Python scripts (ใช้แค่ development)
+Source/*.py
+
+# Log files
+*.log
+Source/backend/update_log.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large data files
+Source/thailand-260621.osm.pbf
+Source/Combined_LED_Data_All_Final.xlsx
+Source/schema.json
+Source/asset_temp.json
+Source/test_asset.json
+Source/test_extract.js
+Source/test_osm_output.txt
+Source/loc_intel.txt
+Source/scratch_inv_calc.jsx

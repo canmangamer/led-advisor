@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กำลังตรวจสอบผลขายทอดตลาด...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f4f9;
+        }
+        .loading-text {
+            font-size: 1.2rem;
+            color: #333;
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #dc3545;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body onload="document.getElementById('autoSubmitForm').submit();">
+
+    <div class="loading-text">
+        <div class="spinner"></div>
+        กำลังส่งข้อมูลค้นหาคดี...<br>
+        <span style="font-size: 0.9rem; color: #666;">กรุณารอสักครู่ ระบบกำลังนำท่านไปยังหน้าผลลัพธ์</span>
+    </div>
+
+    <!-- 
+        ฟอร์มจำลอง: ต้องใส่ข้อมูลให้ครบทุกฟิลด์เหมือนหน้าเว็บจริง 
+        และใช้ accept-charset="windows-874" เพื่อให้เบราว์เซอร์จัดการภาษาไทยให้เข้ากับระบบเก่า
+    -->
+    <form id="autoSubmitForm" action="https://asset.led.go.th/report_new/reports.asp" method="POST" accept-charset="windows-874" style="display: none;">
+        
+        <input type="hidden" name="ALAW_SUIT_NO" value="ผบE.1292">
+        <input type="hidden" name="ALAW_SUIT_YEAR" value="2563">
+        
+        <!-- ฟิลด์เหล่านี้ "ต้องมี" ส่งไปด้วยแม้จะเป็นค่าว่างเปล่า -->
+        <input type="hidden" name="person1" value="">
+        <input type="hidden" name="startdate" value="">
+        
+        <!-- จุดสำคัญ: ปุ่ม Action ต้องมีเว้นวรรคหน้าหลังเป๊ะๆ ตามต้นฉบับ " ค้นหา " -->
+        <input type="hidden" name="Action" value=" ค้นหา "> 
+
+    </form>
+
+</body>
+</html>

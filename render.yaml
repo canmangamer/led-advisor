@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: led-advisor-api
+    runtime: node
+    rootDir: Source/backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGIN
+        value: https://led-advisor.vercel.app
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1

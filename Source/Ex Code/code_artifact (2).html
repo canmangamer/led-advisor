@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>กำลังตรวจสอบผลขายทอดตลาด...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f4f9;
+        }
+        .btn-search {
+            padding: 12px 24px;
+            background-color: #dc3545; /* สีแดงให้เข้ากับธีมคดีแดง */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-search:hover {
+            background-color: #c82333;
+        }
+        .btn-search:active {
+            transform: translateY(2px);
+        }
+        .loading-text {
+            font-size: 1.2rem;
+            color: #333;
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #dc3545;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loading-text">
+        <div class="spinner"></div>
+        กำลังเข้ารหัสและค้นหาข้อมูล...<br>
+        <span style="font-size: 0.9rem; color: #666;">ระบบกำลังนำท่านไปยังหน้าผลลัพธ์ของกรมบังคับคดี</span>
+    </div>
+
+    <!-- ฟอร์มถูกตั้งค่าเป็น display: none; ไว้ -->
+    <form id="autoSubmitForm" action="https://asset.led.go.th/report_new/reports.asp" method="POST" style="display: none;">
+        
+        <!-- ข้อมูลที่จะส่ง (ตอนแรกปล่อยว่างไว้ก่อน เดี๋ยว JS จะเอาค่าที่แปลงแล้วมาใส่) -->
+        <input type="hidden" name="ALAW_SUIT_NO" id="suitNoInput" value="">
+        <input type="hidden" name="ALAW_SUIT_YEAR" id="suitYearInput" value="">
+        <input type="hidden" name="Action" value=" ค้นหา "> <!-- เพิ่มปุ่มจำลองการคลิก -->
+
+    </form>
+
+    <script>
+        // 1. กำหนดค่าที่ต้องการค้นหาที่นี่
+        const suitNo = "ผบE.1292";
+        const suitYear = "2563";
+
+        // 2. ฟังก์ชันแปลงข้อความให้เป็น TIS-620 URL Encoding (เฉพาะอักษรไทย)
+        function encodeToTIS620(str) {
+            let encodedStr = '';
+            for (let i = 0; i < str.length; i++) {
+                const charCode = str.charCodeAt(i);
+                if (charCode <= 127) {
+                    // ตัวอักษรภาษาอังกฤษ/ตัวเลข/สัญลักษณ์พื้นฐาน ปล่อยไว้ปกติ (แต่ในกรณีส่ง Form ควรปล่อยให้ Form จัดการ Encode ตัวสัญลักษณ์เอง เราจะ Encode เฉพาะภาษาไทย)
+                    encodedStr += str.charAt(i); 
+                } else if (charCode >= 3585 && charCode <= 3675) {
+                    // ตัวอักษรภาษาไทย: แปลงให้อยู่ในช่วงของ TIS-620/Win874
+                    const tis620Code = charCode - 3424;
+                    // แปลงเป็นรหัส Hex (%XX)
+                    encodedStr += '%' + tis620Code.toString(16).toUpperCase();
+                } else {
+                    // ตัวอักษรอื่นๆ เผื่อหลุดมา
+                    encodedStr += encodeURIComponent(str.charAt(i));
+                }
+            }
+            return encodedStr;
+        }
+
+        // 3. เมื่อหน้าเว็บโหลดเสร็จ ให้ทำการแปลงค่า, ใส่ในฟอร์ม, และ Submit
+        window.onload = function() {
+            // เราไม่จำเป็นต้องแปลง (Encode) ตรงนี้ เพราะหากเราเอา "%BC%BAE.1292" ไปใส่ใน input ของ form
+            // ตอน Submit ฟอร์มจะพยายาม Encode เครื่องหมาย "%" ซ้ำอีกรอบ ทำให้ข้อมูลพัง (เป็น %25BC...)
+            // 
+            // ทางแก้: สำหรับการส่ง POST Form ที่ต้องการ TIS-620 เราไม่สามารถพึ่ง HTML Form ธรรมดาได้
+            // เราต้องจำลองการส่ง XMLHttpRequest (AJAX) หรือสร้าง Form แบบพิเศษ
+            
+            // --- สร้างฟอร์มและตั้งค่า action แบบที่ส่ง URL Encoded string ไปเลยไม่ได้ ---
+            // ดังนั้น เราจะเปลี่ยนวิธี เป็นการสร้าง Form ชั่วคราว และเปลี่ยน URL Parameter เอา
+            
+            // อย่างไรก็ตาม ระบบ report_new คาดหวังการรับข้อมูลแบบ POST
+            // แต่จากการทดสอบ ระบบรุ่นเก่าของ LED มักจะยอมรับ GET method ด้วย!
+            // เรามาลองส่งเป็น GET ก่อน เพราะจัดการ Encoding ได้ง่ายกว่ามาก
+            
+            const encodedSuitNo = encodeToTIS620(suitNo);
+            const encodedSuitYear = suitYear; // ตัวเลขไม่ต้องเข้ารหัส
+            
+            // สร้าง URL เป้าหมาย
+            const targetUrl = `https://asset.led.go.th/report_new/reports.asp?ALAW_SUIT_NO=${encodedSuitNo}&ALAW_SUIT_YEAR=${encodedSuitYear}&Action= ค้นหา `;
+            
+            // ย้ายหน้าจอไปยังเป้าหมายทันที
+            window.location.href = targetUrl;
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบผลขายทอดตลาด</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f4f9;
+        }
+        .btn-search {
+            padding: 12px 24px;
+            background-color: #dc3545; /* สีแดงให้เข้ากับธีมคดีแดง */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-search:hover {
+            background-color: #c82333;
+        }
+        .btn-search:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 
+      ฟอร์มส่งข้อมูลไปยังหน้า report_new
+      - กำหนด accept-charset="TIS-620" เพื่อให้ระบบส่งข้อมูลภาษาไทยเป็นมาตรฐานเดียวกับกรมบังคับคดี
+      - method="POST" ตามที่ซอร์สโค้ดของเว็บกำหนด
+      - target="_blank" เพื่อเปิดหน้าต่างใหม่ 
+    -->
+    <form action="https://asset.led.go.th/report_new/reports.asp" method="POST" accept-charset="TIS-620" target="_blank">
+        
+        <!-- ข้อมูลที่ต้องการค้นหา (แก้ไขค่าใน value ได้ตามต้องการ) -->
+        <input type="hidden" name="ALAW_SUIT_NO" value="ผบE.1292">
+        <input type="hidden" name="ALAW_SUIT_YEAR" value="2563">
+        
+        <!-- 
+          หมายเหตุ: ผมไม่ได้ใส่ชื่อโจทก์ (person1) และจำเลยลงไป 
+          เนื่องจากโค้ดของเว็บกรมบังคับคดีมีการดักจับ (Validation) ว่า 
+          "หากใส่ชื่อโจทก์ จะต้องบังคับให้ใส่วันที่ขายด้วย" 
+          ดังนั้นการค้นหาด้วยหมายเลขคดีแดงและปี จะได้ผลลัพธ์ที่ตรงและแม่นยำที่สุดครับ
+        -->
+
+        <!-- ปุ่มสำหรับให้ผู้ใช้กด -->
+        <button type="submit" class="btn-search">
+            📊 ตรวจสอบผลขายทอดตลาด (ผบE.1292/2563)
+        </button>
+
+    </form>
+
+</body>
+</html>

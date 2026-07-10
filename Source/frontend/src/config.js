@@ -1,0 +1,4 @@
+// Central API URL config - auto-detects environment
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+export default API_BASE;
