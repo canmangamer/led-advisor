@@ -18,7 +18,7 @@ import ApiManagement from './pages/admin/ApiManagement';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import './index.css';
-import { Briefcase, Crown, Settings, Heart } from 'lucide-react';
+import { Briefcase, Crown, Settings, Heart, LogOut } from 'lucide-react';
 
 const AppContent = () => {
   const navigate = useNavigate();
@@ -33,64 +33,71 @@ const AppContent = () => {
             <div className="brand-logo">
               YokPai
             </div>
-            <div className="brand-slogan">
+            <div className="brand-slogan desktop-only">
               แพลตฟอร์มวิเคราะห์ประมูลอสังหาฯ สำหรับนักลงทุนตัวจริง
             </div>
           </div>
         </Link>
         <div className="header-actions">
           {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Link 
                 to="/portfolio" 
-                style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#1a73e8', backgroundColor: '#e8f0fe', border: '1px solid #1a73e8', padding: '0 16px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', textDecoration: 'none', transition: 'background-color 0.2s' }}
+                style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#1a73e8', backgroundColor: '#e8f0fe', border: '1px solid #1a73e8', padding: '0 12px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', textDecoration: 'none', transition: 'background-color 0.2s' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#d2e3fc'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#e8f0fe'}
+                title="พอร์ตประมูล"
               >
-                <Briefcase size={16} color="#1a73e8" /> พอร์ตประมูล
+                <Briefcase size={16} color="#1a73e8" /> <span className="desktop-only">พอร์ตประมูล</span>
               </Link>
               <Link 
                 to="/portfolio" 
-                style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#d93025', backgroundColor: '#ffffff', border: '1px solid #d93025', padding: '0 16px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', textDecoration: 'none', transition: 'background-color 0.2s' }}
+                style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', color: '#d93025', backgroundColor: '#ffffff', border: '1px solid #d93025', padding: '0 12px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', textDecoration: 'none', transition: 'background-color 0.2s' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fce8e6'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
+                title="รายการโปรด"
               >
-                <Heart size={16} color="#d93025" /> รายการโปรด
+                <Heart size={16} color="#d93025" /> <span className="desktop-only">รายการโปรด</span>
               </Link>
               {user.is_vip ? (
-                <span style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', backgroundColor: '#fef7e0', color: '#b06000', border: '1px solid transparent', padding: '0 16px', borderRadius: '100px', fontSize: '14px', fontWeight: 500 }}>
-                  <Crown size={16} color="#ea8600" /> VIP
+                <span style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', backgroundColor: '#fef7e0', color: '#b06000', border: '1px solid transparent', padding: '0 12px', borderRadius: '100px', fontSize: '14px', fontWeight: 500 }} title="VIP">
+                  <Crown size={16} color="#ea8600" /> <span className="desktop-only">VIP</span>
                 </span>
               ) : (
                 <button 
                   onClick={() => navigate('/pricing')}
-                  style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', backgroundColor: '#fbbc04', color: '#202124', border: '1px solid transparent', padding: '0 16px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', cursor: 'pointer', boxShadow: '0 1px 2px 0 rgba(60,64,67,0.3)', transition: 'box-shadow 0.2s' }}
+                  style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', backgroundColor: '#fbbc04', color: '#202124', border: '1px solid transparent', padding: '0 12px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', cursor: 'pointer', boxShadow: '0 1px 2px 0 rgba(60,64,67,0.3)', transition: 'box-shadow 0.2s' }}
                   onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 1px 3px 1px rgba(60,64,67,0.15), 0 1px 2px 0 rgba(60,64,67,0.3)'}
                   onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 1px 2px 0 rgba(60,64,67,0.3)'}
+                  title="อัปเกรด VIP"
                 >
-                  👑 อัปเกรด VIP
+                  <Crown size={16} color="#202124" /> <span className="desktop-only">อัปเกรด VIP</span>
                 </button>
               )}
               {user.role === 'admin' && (
                 <button 
                   onClick={() => navigate('/admin')}
-                  style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', backgroundColor: '#e8f0fe', color: '#1967d2', border: '1px solid transparent', padding: '0 16px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', cursor: 'pointer', transition: 'background-color 0.2s' }}
+                  style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', backgroundColor: '#e8f0fe', color: '#1967d2', border: '1px solid transparent', padding: '0 12px', borderRadius: '100px', fontWeight: 500, fontSize: '14px', cursor: 'pointer', transition: 'background-color 0.2s' }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#d2e3fc'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#e8f0fe'}
+                  title="Admin"
                 >
-                  <Settings size={16} color="#4285f4" /> Admin
+                  <Settings size={16} color="#4285f4" /> <span className="desktop-only">Admin</span>
                 </button>
               )}
               <Link 
                 to="/profile" 
-                style={{ fontSize: '14px', color: '#1a73e8', fontWeight: 600, marginLeft: '8px', marginRight: '8px', textDecoration: 'none', padding: '6px 12px', borderRadius: '100px', transition: 'background-color 0.2s' }} 
+                className="desktop-only"
+                style={{ fontSize: '14px', color: '#1a73e8', fontWeight: 600, marginLeft: '4px', marginRight: '4px', textDecoration: 'none', padding: '6px 12px', borderRadius: '100px', transition: 'background-color 0.2s' }} 
                 onMouseEnter={e => e.currentTarget.style.backgroundColor='#e8f0fe'} 
                 onMouseLeave={e => e.currentTarget.style.backgroundColor='transparent'}
                 title="ดูข้อมูลบัญชีผู้ใช้"
               >
                 {user.email}
               </Link>
-              <button className="btn-login" onClick={() => { logout(); navigate('/'); }} style={{ borderRadius: '100px', padding: '6px 16px', fontSize: '14px', fontWeight: 500 }}>ออกจากระบบ</button>
+              <button title="ออกจากระบบ" className="btn-login" onClick={() => { logout(); navigate('/'); }} style={{ borderRadius: '100px', padding: '0 12px', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '14px', fontWeight: 500 }}>
+                <LogOut size={16} /> <span className="desktop-only">ออกจากระบบ</span>
+              </button>
             </div>
           ) : (
             <>

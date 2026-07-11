@@ -691,8 +691,10 @@ body {
   .asset-modal-mobile > div {
     padding-bottom: 20px !important;
   }
-  .asset-details-grid {
+  .asset-details-grid, .grid-cols-2 {
     grid-template-columns: 1fr !important;
   }
+  .desktop-only {
+    display: none !important;
+  }
 }
-
