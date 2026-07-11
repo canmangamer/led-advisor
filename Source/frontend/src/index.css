@@ -285,6 +285,9 @@ body {
   position: relative;
   z-index: 1; /* fix leaflet overlap */
 }
+.mobile-only-btn {
+  display: none;
+}
 
 /* Modal styles */
 .modal-overlay {
@@ -707,13 +710,24 @@ body {
     margin-bottom: 1rem !important;
   }
   
+  .mobile-only-btn {
+    display: flex !important;
+  }
   /* Mobile Map Mode Overrides */
   .map-container {
-    height: calc(100vh - 140px) !important;
-    flex: 1 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    z-index: 9999 !important;
   }
   .map-radius-control {
-    bottom: 20px !important;
+    bottom: 40px !important;
     width: 90% !important;
     padding: 10px 15px !important;
   }

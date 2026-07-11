@@ -973,6 +973,13 @@ function Dashboard() {
               <div className="map-container" style={{ flex: 1, position: 'relative', margin: '0 -1rem' }}>
                 
                 {/* Modern Map Controls */}
+                <button 
+                  className="mobile-only-btn"
+                  onClick={() => setViewMode('list')}
+                  style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 1000, backgroundColor: 'white', border: '1px solid #dadce0', borderRadius: '100px', padding: '10px 16px', alignItems: 'center', gap: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', fontWeight: 600, color: '#3c4043', cursor: 'pointer' }}
+                >
+                  <List size={18} color="#1a73e8" /> กลับไปแบบรายการ
+                </button>
                 <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <button 
                     onClick={getCurrentLocation}
