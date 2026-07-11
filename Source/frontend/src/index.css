@@ -691,5 +691,8 @@ body {
   .asset-modal-mobile > div {
     padding-bottom: 20px !important;
   }
+  .asset-details-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 

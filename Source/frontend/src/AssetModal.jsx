@@ -787,7 +787,7 @@ END:VCALENDAR`;
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem 1rem', backgroundColor: '#ffffff', border: '1px solid #dadce0', padding: '1.5rem', borderRadius: '12px' }}>
+            <div className="asset-details-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem 1rem', backgroundColor: '#ffffff', border: '1px solid #dadce0', padding: '1.5rem', borderRadius: '12px' }}>
               <div style={{ display: 'flex', gap: '0.75rem' }}>
                 <Maximize size={18} style={{ color: '#5f6368', marginTop: '4px' }} />
                 <div>

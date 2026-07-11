@@ -55,6 +55,17 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 last_checked DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         `);
+
+        db.run(`
+            CREATE TABLE IF NOT EXISTS system_settings (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+        `, (err) => {
+            if (!err) {
+                db.run("INSERT OR IGNORE INTO system_settings (key, value) VALUES ('allow_registration', 'true')");
+            }
+        });
     }
 });
 
