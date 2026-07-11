@@ -709,8 +709,8 @@ body {
   
   /* Mobile Map Mode Overrides */
   .map-container {
-    height: 75vh !important;
-    flex: none !important;
+    height: calc(100vh - 140px) !important;
+    flex: 1 !important;
   }
   .map-radius-control {
     bottom: 20px !important;
