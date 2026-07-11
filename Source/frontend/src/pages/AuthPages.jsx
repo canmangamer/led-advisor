@@ -70,10 +70,10 @@ export const Login = () => {
       {error && <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{error}</div>}
       <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={handleLogin}>
         <div>
-          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>อีเมล</label>
+          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>อีเมล / ชื่อผู้ใช้</label>
           <input 
-            type="email" 
-            placeholder="example@email.com" 
+            type="text" 
+            placeholder="example@email.com หรือ username" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
@@ -149,10 +149,10 @@ export const Register = () => {
       {success && <div style={{ color: 'green', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{success}</div>}
       <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={handleRegister}>
         <div>
-          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>อีเมล</label>
+          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>อีเมล / ชื่อผู้ใช้</label>
           <input 
-            type="email" 
-            placeholder="example@email.com" 
+            type="text" 
+            placeholder="example@email.com หรือ username" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import UserProfile from './pages/UserProfile';
@@ -110,7 +110,7 @@ const AppContent = () => {
       {/* DYNAMIC CONTENT (ROUTES) */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" replace />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/profile" element={<UserProfile />} />
           
