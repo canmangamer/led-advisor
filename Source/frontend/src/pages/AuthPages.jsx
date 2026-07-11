@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -34,8 +34,14 @@ export const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const { login } = useContext(AuthContext);
+  const { login, user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -52,7 +58,7 @@ export const Login = () => {
       
       if (res.ok) {
         login(data.token, data.user);
-        navigate('/');
+        navigate('/', { replace: true });
       } else {
         setError(data.error || 'เข้าสู่ระบบล้มเหลว');
       }
@@ -110,7 +116,14 @@ export const Register = () => {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
