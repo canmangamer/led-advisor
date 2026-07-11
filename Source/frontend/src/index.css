@@ -706,4 +706,19 @@ body {
     gap: 1rem !important;
     margin-bottom: 1rem !important;
   }
+  
+  /* Mobile Map Mode Overrides */
+  .map-container {
+    height: 75vh !important;
+    flex: none !important;
+  }
+  .map-search-box {
+    top: auto !important;
+    bottom: 20px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    padding: 0.75rem !important;
+    font-size: 0.85rem !important;
+  }
 }

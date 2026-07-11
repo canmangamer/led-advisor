@@ -973,7 +973,7 @@ function Dashboard() {
               <div className="map-container" style={{ flex: 1, position: 'relative', margin: '0 -1rem' }}>
                 
                 {/* Floating Map Search Box */}
-                <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1000, backgroundColor: 'rgba(255, 255, 255, 0.95)', padding: '1rem', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.15)', width: '300px', border: '1px solid #dadce0', backdropFilter: 'blur(4px)' }}>
+                <div className="map-search-box" style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1000, backgroundColor: 'rgba(255, 255, 255, 0.95)', padding: '1rem', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.15)', width: '300px', border: '1px solid #dadce0', backdropFilter: 'blur(4px)' }}>
                   <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#202124', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <MapPin size={16} color="#1a73e8" /> ค้นหาด้วยพิกัดและรัศมี
                   </div>
