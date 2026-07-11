@@ -194,6 +194,7 @@ const getMarkerIcon = (asset) => {
 };
 
 function Dashboard() {
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('list');
@@ -674,9 +675,17 @@ function Dashboard() {
   return (
     <>
       <div className="app-wrapper">
-      {/* SIDEBAR FILTER PANEL */}
-      <div className="sidebar">
-        <h2 className="title" style={{ fontSize: '1.5rem' }}>ค้นหาทรัพย์</h2>
+      <div className={`sidebar ${showMobileFilters ? 'show-mobile' : ''}`}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 className="title" style={{ fontSize: '1.5rem', margin: 0 }}>ค้นหาทรัพย์</h2>
+          <button 
+            className="mobile-filter-close" 
+            onClick={() => setShowMobileFilters(false)}
+            style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', display: 'none' }}
+          >
+            ✕
+          </button>
+        </div>
         
         
 
@@ -885,7 +894,17 @@ function Dashboard() {
       <div className="main-content" style={{ display: 'flex', flexDirection: 'column', overflowY: viewMode === 'map' ? 'hidden' : 'auto', padding: viewMode === 'map' ? '1rem 1rem 0 1rem' : '1rem', height: '100%' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <h2 className="title" style={{ fontSize: '1.75rem', margin: '0 0 0.5rem 0' }}>รายการทรัพย์สินรอการขาย</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <button 
+                className="mobile-filter-open"
+                onClick={() => setShowMobileFilters(true)}
+                style={{ display: 'none', background: 'var(--primary-color)', color: 'white', border: 'none', padding: '0.4rem 0.75rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', alignItems: 'center', gap: '4px' }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                กรองข้อมูล
+              </button>
+              <h2 className="title" style={{ fontSize: '1.75rem', margin: 0 }}>รายการทรัพย์สินรอการขาย</h2>
+            </div>
             <p style={{ color: 'var(--text-color)', opacity: 0.8, margin: 0 }}>
               พบทรัพย์ทั้งหมด <strong>{totalItems}</strong> รายการ 
               {viewMode === 'map' && totalItems > 5000 && (

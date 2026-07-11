@@ -598,12 +598,28 @@ body {
   }
   
   .sidebar {
-    width: 100%;
-    height: auto;
-    max-height: 50vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    max-height: none;
+    z-index: 2000;
+    transition: left 0.3s ease;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  }
+
+  .sidebar.show-mobile {
+    left: 0;
+  }
+
+  .mobile-filter-close {
+    display: block !important;
+  }
+
+  .mobile-filter-open {
+    display: flex !important;
   }
 
   .top-header {
