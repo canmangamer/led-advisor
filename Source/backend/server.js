@@ -24,10 +24,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// On Render.com, use persistent disk at /data; locally use __dirname
-const dbPath = process.env.NODE_ENV === 'production'
-  ? '/data/database.sqlite'
-  : path.join(__dirname, 'database.sqlite');
+const dbPath = path.join(__dirname, 'database.sqlite');
 
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');

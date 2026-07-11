@@ -8,10 +8,8 @@ node_modules/
 Source/backend/.env
 
 # Database files (ไฟล์ใหญ่เกิน)
-Source/backend/database.sqlite
 Source/backend/LED_Advisor.db
 Source/backend/data.db
-*.sqlite
 *.db
 
 # Build output

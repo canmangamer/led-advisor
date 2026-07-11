@@ -2,6 +2,7 @@ services:
   - type: web
     name: led-advisor-api
     runtime: node
+    plan: free
     rootDir: Source/backend
     buildCommand: npm install
     startCommand: node server.js
@@ -12,7 +13,3 @@ services:
         value: production
       - key: ALLOWED_ORIGIN
         value: https://led-advisor.vercel.app
-    disk:
-      name: sqlite-data
-      mountPath: /data
-      sizeGB: 1
