@@ -451,7 +451,7 @@ function Dashboard() {
 
   const fetchFilters = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/filters');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/filters`);
       const data = await res.json();
       setFiltersData(data);
       // We don't need to force min/max to defaults from API anymore
@@ -511,7 +511,7 @@ function Dashboard() {
     }
     try {
       const newPortfolio = asset.is_portfolio ? 0 : 1;
-      const res = await fetch('http://localhost:3001/api/user-data', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -543,7 +543,7 @@ function Dashboard() {
     }
     const newStatus = asset.is_favorite ? 0 : 1;
     try {
-      await fetch('http://localhost:3001/api/user-data', {
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: asset.id, is_favorite: newStatus, notes: asset.notes || '' })
@@ -560,7 +560,7 @@ function Dashboard() {
 
   const handleInvestmentSave = async (asset, investmentDataStr) => {
     try {
-      await fetch('http://localhost:3001/api/user-data', {
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: asset.id, is_favorite: asset.is_favorite, notes: asset.notes || '', investment_data: investmentDataStr })

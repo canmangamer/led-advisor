@@ -75,7 +75,7 @@ const Portfolio = () => {
   const fetchPortfolio = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:3001/api/assets?portfolioOnly=true');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/assets?portfolioOnly=true`);
       const data = await res.json();
       setAssets(data.data || []);
     } catch (err) {
@@ -98,7 +98,7 @@ const Portfolio = () => {
       return;
     }
     try {
-      const res = await fetch('http://localhost:3001/api/user-data', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: asset.id, is_portfolio: 0 })
@@ -124,7 +124,7 @@ const Portfolio = () => {
       invData.tracking = { ...(invData.tracking || {}), ...updates };
       const invStr = JSON.stringify(invData);
 
-      const res = await fetch('http://localhost:3001/api/user-data', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: asset.id, investment_data: invStr })
@@ -1003,7 +1003,7 @@ const Portfolio = () => {
           onInvestmentSave={async (a, invStr) => {
             setAssets(prev => prev.map(p => p.id === a.id ? { ...p, investment_data: invStr } : p));
             try {
-              await fetch('http://localhost:3001/api/user-data', {
+              await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ led_id: a.LED_ID, is_favorite: a.is_favorite, notes: a.notes || '', investment_data: invStr })

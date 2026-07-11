@@ -265,7 +265,7 @@ export const AssetModal = ({ asset: initialAsset, onClose, onFavoriteToggle, onP
     const timer = setTimeout(async () => {
       setIsSaving(true);
       try {
-        const res = await fetch('http://localhost:3001/api/user-data', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/user-data`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -288,7 +288,7 @@ export const AssetModal = ({ asset: initialAsset, onClose, onFavoriteToggle, onP
   const handleAiAnalyze = async () => {
     setIsAnalyzing(true);
     try {
-      const res = await fetch('http://localhost:3001/api/ai-analyze', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/ai-analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ assetData: asset })

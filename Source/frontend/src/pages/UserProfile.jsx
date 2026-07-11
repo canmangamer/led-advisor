@@ -70,11 +70,11 @@ export default function UserProfile() {
     const fetchUserData = async () => {
       try {
         // Fetch portfolio count & list
-        const portRes = await fetch('http://localhost:3001/api/assets?portfolioOnly=true');
+        const portRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/assets?portfolioOnly=true`);
         const portData = await portRes.json();
         
         // Fetch favorites count & list
-        const favRes = await fetch('http://localhost:3001/api/assets?favoritesOnly=true');
+        const favRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/assets?favoritesOnly=true`);
         const favData = await favRes.json();
         
         // Get saved filters count
