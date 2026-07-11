@@ -955,20 +955,24 @@ function Dashboard() {
           </div>
         )}
 
-        {loading ? (
-          <div style={{ textAlign: 'center', padding: '3rem' }}>
+        {/* Loading Overlay */}
+        {loading && (
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 10000, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(2px)', borderRadius: '12px' }}>
             <div style={{ display: 'inline-block', width: '40px', height: '40px', border: '4px solid var(--border-color)', borderTopColor: 'var(--primary-color)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-            <p style={{ marginTop: '1rem' }}>กำลังค้นหาข้อมูล...</p>
+            <p style={{ marginTop: '1rem', fontWeight: 600, color: 'var(--primary-color)' }}>กำลังประมวลผลข้อมูล...</p>
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
           </div>
-        ) : assets.length === 0 ? (
-          <div className="glass-panel" style={{ textAlign: 'center', padding: '4rem 2rem' }}>
+        )}
+
+        {assets.length === 0 && !loading && (
+          <div className="glass-panel" style={{ textAlign: 'center', padding: '4rem 2rem', margin: 'auto' }}>
             <Search size={48} style={{ color: 'var(--border-color)', margin: '0 auto 1rem' }} />
             <h3>ไม่พบข้อมูลทรัพย์สิน</h3>
             <p>ลองปรับเปลี่ยนเงื่อนไขการค้นหาในแถบด้านซ้ายดูนะครับ</p>
           </div>
-        ) : (
-          <>
+        )}
+
+        <div style={{ display: assets.length === 0 && !loading ? 'none' : 'flex', flexDirection: 'column', flex: 1, position: 'relative' }}>
             {viewMode === 'map' && (
               <div className="map-container" style={{ flex: 1, position: 'relative', margin: '0 -1rem' }}>
                 
@@ -1360,9 +1364,8 @@ function Dashboard() {
                 </div>
               </div>
             )}
-          </>
-        )}
-      </div>
+          </div>
+        </div>
       
       {/* Close app-wrapper */}
       </div>
