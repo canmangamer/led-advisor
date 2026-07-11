@@ -321,95 +321,122 @@ app.use('/api/admin', adminRoutes(db));
 app.get('/api/assets', (req, res) => {
     const { query, params } = buildQuery(req.query);
 
-    db.all(query, params, (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
+    // Replace SELECT clause to get COUNT
+    const countQuery = query.replace('SELECT a.rowid as id, a.*, u.is_favorite, u.is_portfolio, u.notes, u.investment_data', 'SELECT COUNT(*) as total');
 
-        let filteredRows = rows;
+    db.get(countQuery, params, (err, countRow) => {
+        if (err) return res.status(500).json({ error: err.message });
+        
+        let total = countRow ? countRow.total : 0;
+        
+        // Determine if we need JS filtering/sorting
+        const needsJsFilter = !!(req.query.lat && req.query.lng && req.query.radius);
+        const needsJsSort = req.query.sortBy === 'date_asc' || req.query.sortBy === 'size_asc' || req.query.sortBy === 'size_desc';
 
-        // Apply exact Haversine distance filter if needed
-        if (req.query.lat && req.query.lng && req.query.radius) {
-            const targetLat = parseFloat(req.query.lat);
-            const targetLng = parseFloat(req.query.lng);
-            const radius = parseFloat(req.query.radius);
+        let finalQuery = query;
+        let finalParams = [...params];
 
-            filteredRows = rows.filter(row => {
-                if (row.latitude == null || row.longitude == null) return false;
-                const dist = getDistanceInKm(targetLat, targetLng, row.latitude, row.longitude);
-                // attach distance for UI
-                row.distanceKm = dist;
-                return dist <= radius;
-            });
-            // Sort by distance
-            filteredRows.sort((a, b) => a.distanceKm - b.distanceKm);
-        }
-
-        // Apply general sorting
-        if (req.query.sortBy) {
-            const getArea = (row) => {
-                const r = parseFloat(row['เนื้อที่ (ไร่)']) || 0;
-                const g = parseFloat(row['เนื้อที่ (งาน)']) || 0;
-                const w = parseFloat(row['เนื้อที่ (ตร.วา/ตร.ม.)']) || 0;
-                return (r * 400) + (g * 100) + w;
-            };
-            
-            const parseDate = (dStr) => {
-                if (!dStr) return 99999999;
-                const [d, m, y] = dStr.split('/');
-                return parseInt(`${y}${m}${d.padStart(2, '0')}`);
-            };
-
-            const getNextDate = (row) => {
-                const todayStr = (() => {
-                    const t = new Date();
-                    return parseInt(`${t.getFullYear() + 543}${String(t.getMonth() + 1).padStart(2, '0')}${String(t.getDate()).padStart(2, '0')}`);
-                })();
-                
-                let minDate = 99999999;
-                for (let i = 1; i <= 8; i++) {
-                    const d = parseDate(row[`วันที่นัดที่ ${i}`]);
-                    if (d >= todayStr && d < minDate) {
-                        minDate = d;
-                    }
-                }
-                return minDate;
-            };
-
-            filteredRows.sort((a, b) => {
-                let valA, valB;
-                switch (req.query.sortBy) {
-                    case 'price_asc':
-                        return (a.price_numeric || 0) - (b.price_numeric || 0);
-                    case 'price_desc':
-                        return (b.price_numeric || 0) - (a.price_numeric || 0);
-                    case 'size_asc':
-                        return getArea(a) - getArea(b);
-                    case 'size_desc':
-                        return getArea(b) - getArea(a);
-                    case 'date_asc':
-                        return getNextDate(a) - getNextDate(b);
-                    case 'sale_order_asc':
-                        return (parseInt(a['ลำดับที่การขาย']) || 0) - (parseInt(b['ลำดับที่การขาย']) || 0);
-                    case 'sale_order_desc':
-                        return (parseInt(b['ลำดับที่การขาย']) || 0) - (parseInt(a['ลำดับที่การขาย']) || 0);
-                    default:
-                        return 0;
-                }
-            });
-        }
-
-        // Apply pagination in JS
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 20;
-        const total = filteredRows.length;
-        const pagedData = filteredRows.slice((page - 1) * limit, page * limit);
 
-        res.json({
-            total: total,
-            page: page,
-            limit: limit,
-            data: pagedData
+        if (!needsJsFilter && !needsJsSort) {
+            // Apply SQL Sorting
+            if (req.query.sortBy) {
+                switch (req.query.sortBy) {
+                    case 'price_asc': finalQuery += ' ORDER BY a.price_numeric ASC'; break;
+                    case 'price_desc': finalQuery += ' ORDER BY a.price_numeric DESC'; break;
+                    case 'sale_order_asc': finalQuery += ' ORDER BY CAST(a."ลำดับที่การขาย" AS INTEGER) ASC'; break;
+                    case 'sale_order_desc': finalQuery += ' ORDER BY CAST(a."ลำดับที่การขาย" AS INTEGER) DESC'; break;
+                }
+            }
+            
+            // Apply SQL Pagination
+            finalQuery += ' LIMIT ? OFFSET ?';
+            finalParams.push(limit, (page - 1) * limit);
+        }
+
+        db.all(finalQuery, finalParams, (err, rows) => {
+            if (err) return res.status(500).json({ error: err.message });
+
+            if (!needsJsFilter && !needsJsSort) {
+                // Fast path: already paginated and sorted in SQL
+                return res.json({ total, page, limit, data: rows });
+            }
+
+            // Slow path: JS processing
+            let filteredRows = rows;
+
+            // Apply exact Haversine distance filter if needed
+            if (needsJsFilter) {
+                const targetLat = parseFloat(req.query.lat);
+                const targetLng = parseFloat(req.query.lng);
+                const radius = parseFloat(req.query.radius);
+
+                filteredRows = rows.filter(row => {
+                    if (row.latitude == null || row.longitude == null) return false;
+                    const dist = getDistanceInKm(targetLat, targetLng, row.latitude, row.longitude);
+                    row.distanceKm = dist;
+                    return dist <= radius;
+                });
+                
+                total = filteredRows.length; // Update total after distance filter
+
+                if (!req.query.sortBy) {
+                    filteredRows.sort((a, b) => a.distanceKm - b.distanceKm);
+                }
+            }
+
+            // Apply general sorting in JS
+            if (req.query.sortBy) {
+                const getArea = (row) => {
+                    const r = parseFloat(row['เนื้อที่ (ไร่)']) || 0;
+                    const g = parseFloat(row['เนื้อที่ (งาน)']) || 0;
+                    const w = parseFloat(row['เนื้อที่ (ตร.วา/ตร.ม.)']) || 0;
+                    return (r * 400) + (g * 100) + w;
+                };
+                
+                const parseDate = (dStr) => {
+                    if (!dStr) return 99999999;
+                    const [d, m, y] = dStr.split('/');
+                    return parseInt(`${y}${m}${d.padStart(2, '0')}`);
+                };
+
+                const getNextDate = (row) => {
+                    const todayStr = (() => {
+                        const t = new Date();
+                        return parseInt(`${t.getFullYear() + 543}${String(t.getMonth() + 1).padStart(2, '0')}${String(t.getDate()).padStart(2, '0')}`);
+                    })();
+                    let minDate = 99999999;
+                    for (let i = 1; i <= 8; i++) {
+                        const d = parseDate(row[`วันที่นัดที่ ${i}`]);
+                        if (d >= todayStr && d < minDate) minDate = d;
+                    }
+                    return minDate;
+                };
+
+                filteredRows.sort((a, b) => {
+                    switch (req.query.sortBy) {
+                        case 'price_asc': return (a.price_numeric || 0) - (b.price_numeric || 0);
+                        case 'price_desc': return (b.price_numeric || 0) - (a.price_numeric || 0);
+                        case 'size_asc': return getArea(a) - getArea(b);
+                        case 'size_desc': return getArea(b) - getArea(a);
+                        case 'date_asc': return getNextDate(a) - getNextDate(b);
+                        case 'sale_order_asc': return (parseInt(a['ลำดับที่การขาย']) || 0) - (parseInt(b['ลำดับที่การขาย']) || 0);
+                        case 'sale_order_desc': return (parseInt(b['ลำดับที่การขาย']) || 0) - (parseInt(a['ลำดับที่การขาย']) || 0);
+                        default: return 0;
+                    }
+                });
+            }
+
+            // Apply pagination in JS
+            const pagedData = filteredRows.slice((page - 1) * limit, page * limit);
+
+            res.json({
+                total: total,
+                page: page,
+                limit: limit,
+                data: pagedData
+            });
         });
     });
 });
