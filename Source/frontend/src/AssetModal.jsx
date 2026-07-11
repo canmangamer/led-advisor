@@ -453,7 +453,7 @@ export const AssetModal = ({ asset: initialAsset, onClose, onFavoriteToggle, onP
 
   return (
     <div className="modal-overlay" onClick={onClose} style={{ zIndex: 9999 }}>
-      <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '1100px', width: '95%', padding: '2rem' }}>
+      <div className="modal-content asset-modal-mobile" onClick={e => e.stopPropagation()} style={{ maxWidth: '1100px', width: '95%', padding: '2rem' }}>
         <button className="modal-close" onClick={onClose}><X size={24} /></button>
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>

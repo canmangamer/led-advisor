@@ -654,4 +654,42 @@ body {
   .title {
     font-size: 1.5rem;
   }
+
+  /* Mobile enhancements for AssetModal */
+  .asset-modal-mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    padding: 1rem !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+  .asset-modal-mobile h3 {
+    font-size: 1.25rem !important;
+    flex-wrap: wrap;
+  }
+  .asset-modal-mobile .quick-actions-google {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .asset-modal-mobile .quick-actions-google > a, 
+  .asset-modal-mobile .quick-actions-google > div {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  .asset-modal-mobile [style*="justify-content: space-between"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+  .asset-modal-mobile .btn-google-chip {
+    padding: 10px 14px !important;
+    font-size: 0.9rem !important;
+  }
+  .asset-modal-mobile > div {
+    padding-bottom: 20px !important;
+  }
 }
+
