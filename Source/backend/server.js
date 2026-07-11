@@ -328,6 +328,13 @@ function buildQuery(reqQuery) {
 app.use('/api/auth', authRoutes(db));
 app.use('/api/admin', adminRoutes(db));
 
+app.get('/api/settings/public', (req, res) => {
+    db.get("SELECT value FROM system_settings WHERE key = 'allow_registration'", [], (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ allow_registration: row ? row.value === 'true' : true });
+    });
+});
+
 
 app.get('/api/assets', (req, res) => {
     const { query, params } = buildQuery(req.query);

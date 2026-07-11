@@ -16,13 +16,21 @@ import PaymentDashboard from './pages/admin/PaymentDashboard';
 import ApiManagement from './pages/admin/ApiManagement';
 
 import { AuthProvider, AuthContext } from './context/AuthContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './index.css';
 import { Briefcase, Crown, Settings, Heart, LogOut } from 'lucide-react';
 
 const AppContent = () => {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
+  const [allowRegistration, setAllowRegistration] = useState(true);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/settings/public`)
+      .then(res => res.json())
+      .then(data => setAllowRegistration(data.allow_registration))
+      .catch(console.error);
+  }, []);
 
   return (
     <div className="main-layout">
@@ -108,7 +116,9 @@ const AppContent = () => {
                 👑 อัปเกรด VIP
               </button>
               <button className="btn-login" onClick={() => navigate('/login')}>เข้าสู่ระบบ</button>
-              <button className="btn-signup" onClick={() => navigate('/register')}>สมัครสมาชิก</button>
+              {allowRegistration && (
+                <button className="btn-signup" onClick={() => navigate('/register')}>สมัครสมาชิก</button>
+              )}
             </>
           )}
         </div>

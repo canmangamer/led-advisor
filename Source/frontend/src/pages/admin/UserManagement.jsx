@@ -52,6 +52,22 @@ const UserManagement = () => {
   const [selectedTier, setSelectedTier] = useState(365);
   const [isUpgrading, setIsUpgrading] = useState(false);
 
+  // System Settings State
+  const [allowRegistration, setAllowRegistration] = useState(true);
+  const [isSettingLoading, setIsSettingLoading] = useState(false);
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/settings/public`);
+      if (res.ok) {
+        const data = await res.json();
+        setAllowRegistration(data.allow_registration);
+      }
+    } catch (err) {
+      console.error('Error fetching settings:', err);
+    }
+  };
+
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -71,7 +87,31 @@ const UserManagement = () => {
 
   useEffect(() => {
     fetchUsers();
+    fetchSettings();
   }, []);
+
+  const toggleRegistration = async () => {
+    setIsSettingLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${API_BASE}/api/admin/settings`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ key: 'allow_registration', value: !allowRegistration ? 'true' : 'false' })
+      });
+      if (res.ok) {
+        setAllowRegistration(!allowRegistration);
+      }
+    } catch (err) {
+      console.error('Error updating setting:', err);
+      alert('Error updating setting');
+    } finally {
+      setIsSettingLoading(false);
+    }
+  };
 
   const handleUpgrade = async () => {
     if (!selectedUser) return;
@@ -120,7 +160,30 @@ const UserManagement = () => {
         </div>
         
         <div style={{ position: 'relative', width: '300px' }}>
-          <div style={{ position: 'absolute', top: '50%', left: '1rem', transform: 'translateY(-50%)', color: '#94a3b8', display: 'flex', alignItems: 'center' }}>
+          <button 
+            onClick={toggleRegistration}
+            disabled={isSettingLoading}
+            style={{ 
+              marginBottom: '1rem', 
+              width: '100%', 
+              padding: '0.75rem', 
+              borderRadius: '8px', 
+              border: 'none', 
+              fontWeight: 600, 
+              backgroundColor: allowRegistration ? '#ef4444' : '#10b981', 
+              color: 'white', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              opacity: isSettingLoading ? 0.7 : 1
+            }}
+          >
+            {isSettingLoading ? 'กำลังบันทึก...' : allowRegistration ? 'ปิดรับสมัครสมาชิก' : 'เปิดรับสมัครสมาชิก'}
+          </button>
+
+          <div style={{ position: 'absolute', top: '75%', left: '1rem', transform: 'translateY(-50%)', color: '#94a3b8', display: 'flex', alignItems: 'center' }}>
             <Search size={18} />
           </div>
           <input 

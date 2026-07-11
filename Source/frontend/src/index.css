@@ -697,4 +697,13 @@ body {
   .desktop-only {
     display: none !important;
   }
+  .footer-area {
+    padding: 1.5rem 1rem !important;
+    line-height: 1.5;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
 }

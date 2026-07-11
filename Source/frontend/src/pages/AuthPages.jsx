@@ -115,11 +115,17 @@ export const Register = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [allowRegistration, setAllowRegistration] = useState(true);
   
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/settings/public`)
+      .then(res => res.json())
+      .then(data => setAllowRegistration(data.allow_registration))
+      .catch(console.error);
+
     if (user) {
       navigate('/', { replace: true });
     }
@@ -127,6 +133,10 @@ export const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!allowRegistration) {
+      setError('ขณะนี้ปิดรับสมัครสมาชิก');
+      return;
+    }
     setError('');
     
     if (password !== confirmPassword) {
@@ -158,48 +168,60 @@ export const Register = () => {
 
   return (
     <AuthContainer title="สมัครสมาชิก YokPai">
-      {error && <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{error}</div>}
-      {success && <div style={{ color: 'green', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{success}</div>}
-      <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={handleRegister}>
-        <div>
-          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>อีเมล / ชื่อผู้ใช้</label>
-          <input 
-            type="text" 
-            placeholder="example@email.com หรือ username" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
-            required
-          />
+      {!allowRegistration ? (
+        <div style={{ textAlign: 'center', padding: '2rem 0', color: '#ef4444', fontWeight: 600 }}>
+          การสมัครสมาชิกถูกปิดใช้งานชั่วคราว
         </div>
-        <div>
-          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>รหัสผ่าน</label>
-          <input 
-            type="password" 
-            placeholder="••••••••" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
-            required
-          />
-        </div>
-        <div>
-          <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>ยืนยันรหัสผ่าน</label>
-          <input 
-            type="password" 
-            placeholder="••••••••" 
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading} style={{ backgroundColor: '#0f172a', color: 'white', padding: '0.75rem', borderRadius: '8px', border: 'none', fontWeight: 600, marginTop: '0.5rem', cursor: 'pointer', opacity: loading ? 0.7 : 1 }}>
-          {loading ? 'กำลังดำเนินการ...' : 'สมัครสมาชิก'}
-        </button>
-      </form>
-      <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: '#64748b' }}>
-        มีบัญชีอยู่แล้ว? <Link to="/login" style={{ color: '#0f172a', fontWeight: 600, textDecoration: 'none' }}>เข้าสู่ระบบ</Link>
+      ) : (
+        <>
+          {error && <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{error}</div>}
+          {success && <div style={{ color: 'green', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{success}</div>}
+          <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={handleRegister}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>อีเมล / ชื่อผู้ใช้</label>
+              <input 
+                type="text" 
+                placeholder="example@email.com หรือ username" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                required
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>รหัสผ่าน</label>
+              <input 
+                type="password" 
+                placeholder="••••••••" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                required
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.25rem', fontSize: '0.9rem', fontWeight: 600 }}>ยืนยันรหัสผ่าน</label>
+              <input 
+                type="password" 
+                placeholder="••••••••" 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                required
+              />
+            </div>
+            <button 
+              type="submit" 
+              style={{ backgroundColor: '#1d4ed8', color: 'white', padding: '0.75rem', borderRadius: '8px', border: 'none', fontWeight: 600, marginTop: '0.5rem', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1 }}
+              disabled={loading}
+            >
+              {loading ? 'กำลังดำเนินการ...' : 'สร้างบัญชี'}
+            </button>
+          </form>
+        </>
+      )}
+      <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem', color: '#64748b' }}>
+        มีบัญชีอยู่แล้ว? <Link to="/login" style={{ color: '#1d4ed8', textDecoration: 'none', fontWeight: 600 }}>เข้าสู่ระบบ</Link>
       </div>
     </AuthContainer>
   );

@@ -163,5 +163,16 @@ module.exports = (db) => {
     });
   });
 
+  // Update System Settings
+  router.post('/settings', (req, res) => {
+    const { key, value } = req.body;
+    if (!key || value === undefined) return res.status(400).json({ error: 'Key and value required' });
+
+    db.run('INSERT INTO system_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = ?', [key, value, value], (err) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ message: 'Setting updated successfully' });
+    });
+  });
+
   return router;
 };

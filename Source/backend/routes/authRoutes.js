@@ -8,10 +8,16 @@ module.exports = (db) => {
 
   // Register
   router.post('/register', (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+    db.get("SELECT value FROM system_settings WHERE key = 'allow_registration'", [], (err, settingRow) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (settingRow && settingRow.value === 'false') {
+        return res.status(403).json({ error: 'ขณะนี้ปิดรับสมัครสมาชิก' });
+      }
 
-    db.get('SELECT id FROM users WHERE email = ?', [email], (err, row) => {
+      const { email, password } = req.body;
+      if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+
+      db.get('SELECT id FROM users WHERE email = ?', [email], (err, row) => {
       if (err) return res.status(500).json({ error: err.message });
       if (row) return res.status(400).json({ error: 'Email already exists' });
 
