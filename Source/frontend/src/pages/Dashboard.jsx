@@ -972,26 +972,27 @@ function Dashboard() {
             {viewMode === 'map' && (
               <div className="map-container" style={{ flex: 1, position: 'relative', margin: '0 -1rem' }}>
                 
-                {/* Floating Map Search Box */}
-                <div className="map-search-box" style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1000, backgroundColor: 'rgba(255, 255, 255, 0.95)', padding: '1rem', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.15)', width: '300px', border: '1px solid #dadce0', backdropFilter: 'blur(4px)' }}>
-                  <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#202124', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <MapPin size={16} color="#1a73e8" /> ค้นหาด้วยพิกัดและรัศมี
-                  </div>
-                  <button className={`btn ${isSelectingLocation ? 'btn-danger' : 'btn-primary'}`} style={{ width: '100%', marginBottom: '0.5rem', display: 'flex', justifyContent: 'center', gap: '0.5rem', alignItems: 'center' }} onClick={() => setIsSelectingLocation(!isSelectingLocation)}>
-                    <MapPin size={16} /> {isSelectingLocation ? "คลิกบนแผนที่เพื่อปักหมุด..." : "ปักหมุดด้วยตัวเอง"}
+                {/* Modern Map Controls */}
+                <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1000, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <button 
+                    onClick={getCurrentLocation}
+                    title="ตำแหน่งปัจจุบันของฉัน"
+                    style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: 'white', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+                  >
+                    <Navigation size={22} color="#1a73e8" />
                   </button>
-                  <button className="btn btn-outline" style={{ width: '100%', marginBottom: '0.5rem', display: 'flex', justifyContent: 'center', gap: '0.5rem', alignItems: 'center' }} onClick={getCurrentLocation}>
-                    <Navigation size={16} /> ตำแหน่งปัจจุบันของฉัน
+                  <button 
+                    onClick={() => setIsSelectingLocation(!isSelectingLocation)}
+                    title={isSelectingLocation ? "กำลังปักหมุด (คลิกเพื่อยกเลิก)" : "ปักหมุดด้วยตัวเอง"}
+                    style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: isSelectingLocation ? '#ef4444' : 'white', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+                  >
+                    <MapPin size={22} color={isSelectingLocation ? 'white' : '#1a73e8'} />
                   </button>
-                  <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                    <input type="text" className="input-field" placeholder="Lat" value={centerLat} onChange={e => setCenterLat(e.target.value)} style={{ padding: '0.4rem', fontSize: '0.875rem' }} />
-                    <input type="text" className="input-field" placeholder="Lng" value={centerLng} onChange={e => setCenterLng(e.target.value)} style={{ padding: '0.4rem', fontSize: '0.875rem' }} />
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '0.875rem', color: '#5f6368', whiteSpace: 'nowrap' }}>รัศมี (กม.):</span>
-                    <input type="range" min="1" max="50" step="1" style={{ flex: 1, accentColor: '#1a73e8' }} value={radius} onChange={e => setRadius(e.target.value)} />
-                    <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a73e8', minWidth: '24px', textAlign: 'right' }}>{radius}</span>
-                  </div>
+                </div>
+
+                <div className="map-radius-control" style={{ position: 'absolute', bottom: '30px', left: '50%', transform: 'translateX(-50%)', zIndex: 1000, backgroundColor: 'rgba(255, 255, 255, 0.95)', padding: '12px 24px', borderRadius: '100px', boxShadow: '0 4px 15px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', gap: '15px', width: '90%', maxWidth: '350px', backdropFilter: 'blur(8px)' }}>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#3c4043', whiteSpace: 'nowrap' }}>รัศมี {radius} กม.</span>
+                  <input type="range" min="1" max="50" step="1" style={{ flex: 1, accentColor: '#1a73e8' }} value={radius} onChange={e => setRadius(e.target.value)} />
                 </div>
 
                 <MapContainer center={[13.7563, 100.5018]} zoom={6} style={{ height: '100%', width: '100%' }}>
