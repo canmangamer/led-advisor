@@ -12,6 +12,12 @@ const Portfolio = () => {
   const [editingAssetId, setEditingAssetId] = useState(null);
   const [editingCustomName, setEditingCustomName] = useState('');
   const [showColumnPicker, setShowColumnPicker] = useState(false);
+  const [expandedRows, setExpandedRows] = useState({});
+
+  const toggleRow = (e, id) => {
+    e.stopPropagation();
+    setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
+  };
   const defaultColumns = [
     { id: 'image', label: 'รูป', visible: true },
     { id: 'asset', label: 'ทรัพย์', visible: true },
@@ -522,7 +528,7 @@ const Portfolio = () => {
         );
       case 'place':
         return (
-          <td key="place" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="place" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>
               {getShortLocation(asset['สถานที่จำหน่าย'])}
             </div>
@@ -617,7 +623,7 @@ const Portfolio = () => {
         );
       case 'deposit':
         return (
-          <td key="deposit" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#3b82f6' }}>
+          <td key="deposit" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#3b82f6' }}>
             {(() => {
               const dep = Number(String(asset['วางหลักประกันเป็นจำนวน'] || '0').replace(/,/g, ''));
               return dep > 0 ? formatPrice(dep) : '-';
@@ -632,7 +638,7 @@ const Portfolio = () => {
         );
       case 'marketPrice':
         return (
-          <td key="marketPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right' }}>
+          <td key="marketPrice" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right' }}>
             {formatPrice(invData.marketPrice || invData.resalePrice)}
           </td>
         );
@@ -649,7 +655,7 @@ const Portfolio = () => {
         );
       case 'walkawayPrice':
         return (
-          <td key="walkawayPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : '#ef4444' }}>
+          <td key="walkawayPrice" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : '#ef4444' }}>
             {formatPrice(finalWalkaway)}
             {(invData.marketPrice || invData.resalePrice) && finalWalkaway && (() => {
                if (walkawayRoi !== undefined) {
@@ -683,7 +689,7 @@ const Portfolio = () => {
         );
       case 'closedPrice':
         return (
-          <td key="closedPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
+          <td key="closedPrice" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -709,7 +715,7 @@ const Portfolio = () => {
         );
       case 'sellBy':
         return (
-          <td key="sellBy" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
+          <td key="sellBy" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
             {(() => {
               const val = asset['จะทำการขายโดย'] || asset['เงื่อนไขการขาย'];
               if (!val) return '-';
@@ -723,7 +729,7 @@ const Portfolio = () => {
         );
       case 'docType':
         return (
-          <td key="docType" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
+          <td key="docType" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
             {(() => {
               const val = asset['ที่ดิน (ประเภทเอกสาร)'] || asset['ประเภททรัพย์'];
               if (!val) return '-';
@@ -733,19 +739,19 @@ const Portfolio = () => {
         );
       case 'plaintiff':
         return (
-          <td key="plaintiff" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
+          <td key="plaintiff" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
             {asset['โจทก์'] || '-'}
           </td>
         );
       case 'remark':
         return (
-          <td key="remark" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
+          <td key="remark" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
             {asset['หมายเหตุ'] || '-'}
           </td>
         );
       case 'note':
         return (
-          <td key="note" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="note" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
               {asset.notes || '-'}
             </div>
@@ -760,7 +766,7 @@ const Portfolio = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <Briefcase size={32} color="#1a73e8" />
-          <h1 style={{ margin: 0, color: '#1a73e8', fontSize: '2rem', fontWeight: 600 }}>พอร์ตประมูล</h1>
+          <h1 style={{ margin: 0, color: '#1a73e8', fontSize: '2rem', fontWeight: 600 }}><span className="desktop-only">พอร์ตประมูล</span></h1>
         </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <div style={{ position: 'relative' }}>
@@ -769,7 +775,7 @@ const Portfolio = () => {
               className="btn btn-outline" 
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#fff' }}
             >
-              <Layout size={20} /> คอลัมน์
+              <Layout size={20} /> <span className="desktop-only">คอลัมน์</span>
             </button>
             {showColumnPicker && (
               <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '0.5rem', backgroundColor: '#fff', border: '1px solid var(--border-color)', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', zIndex: 50, width: '200px', padding: '0.5rem' }}>
@@ -791,7 +797,7 @@ const Portfolio = () => {
             )}
           </div>
           <Link to="/" className="btn btn-outline" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <ArrowLeft size={20} /> กลับไปหน้าหลัก
+            <ArrowLeft size={20} /> <span className="desktop-only">กลับไปหน้าหลัก</span>
           </Link>
         </div>
       </div>
@@ -893,6 +899,7 @@ const Portfolio = () => {
                 return (
                   <tr 
                     key={asset.id} 
+                    className={expandedRows[asset.id] ? "expanded" : ""}
                     style={{ 
                       backgroundColor: rowBg,
                       borderBottom: '1px solid #dadce0', 
@@ -942,6 +949,15 @@ const Portfolio = () => {
                       </div>
                     </td>
                     {columns.filter(c => c.visible).map(c => renderCell(c, asset, isWin, isStarred, notReady, strikeThrough, invData, tracking, getExpectedStartingPrice, getShortLocation, calculateDaysLeft, finalTarget, finalRoi, finalWalkaway, finalRoiWalkaway))}
+                    <td 
+                      className="mobile-only-btn" 
+                      style={{ padding: '0.75rem', justifyContent: 'center', cursor: 'pointer', borderTop: '1px solid #f1f5f9', backgroundColor: '#f8fafc', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px' }} 
+                      onClick={(e) => toggleRow(e, asset.id)}
+                    >
+                      <span style={{ color: 'var(--primary-color)', fontWeight: 600, fontSize: '0.85rem' }}>
+                        {expandedRows[asset.id] ? 'ย่อรายละเอียด ▴' : 'ดูรายละเอียดเพิ่มเติม ▾'}
+                      </span>
+                    </td>
                   </tr>
                 );
               })}

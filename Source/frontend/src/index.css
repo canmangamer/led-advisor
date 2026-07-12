@@ -836,4 +836,7 @@ body {
     font-size: 0.85rem !important;
     padding: 8px !important;
   }
+  .portfolio-table tr:not(.expanded) td.mobile-secondary {
+    display: none !important;
+  }
 }
