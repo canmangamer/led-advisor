@@ -486,7 +486,13 @@ const Portfolio = () => {
                               
                               const depositFmt = Number(String(asset['วางหลักประกันเป็นจำนวน'] || '').replace(/,/g, '') || 0).toLocaleString();
                               const fmtPrice = asset.price_numeric ? Number(asset.price_numeric).toLocaleString() : '-';
+                              const isMortgagedCal = Boolean(asset['ยอดหนี้จำนอง'] && String(asset['ยอดหนี้จำนอง']) !== '0.00' && String(asset['ยอดหนี้จำนอง']) !== '0');
+                              const mortgageStr = isMortgagedCal ? ` (จำนอง: ฿${Number(String(asset['ยอดหนี้จำนอง']).replace(/,/g, '')).toLocaleString()})` : '';
+                              
                               const googleDetails = encodeURIComponent(`คดี: ${asset['คดีหมายเลขแดงที่']||'-'} ลำดับ: ${asset['ลำดับที่การขาย']||'-'}
+เอกสารสิทธิ์: ${asset['ที่ดิน (ประเภทเอกสาร)'] || '-'}
+การขาย: ${asset['เงื่อนไขการขาย'] || asset['ลักษณะการขาย'] || '-'}
+จะทำการขายโดย: ${asset['จะทำการขายโดย'] || '-'}${mortgageStr}
 โฉนด: ${asset['เลขที่โฉนด']||'-'} (${asset['เนื้อที่ (ไร่)']||'0'}ร่ ${asset['เนื้อที่ (งาน)']||'0'}ง ${asset['เนื้อที่ (ตร.วา/ตร.ม.)']||'0'}ว)
 อ.${asset['เขต/อำเภอ']||'-'} จ.${asset['จังหวัด']||'-'}
 ประเมิน: ฿${fmtPrice} มัดจำ: ฿${depositFmt}
