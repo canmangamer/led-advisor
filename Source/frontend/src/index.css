@@ -678,7 +678,8 @@ body {
     gap: 10px !important;
   }
   .asset-modal-mobile .quick-actions-google > a, 
-  .asset-modal-mobile .quick-actions-google > div {
+  .asset-modal-mobile .quick-actions-google > div,
+  .asset-modal-mobile .quick-actions-google > button {
     width: 100% !important;
     box-sizing: border-box;
   }
