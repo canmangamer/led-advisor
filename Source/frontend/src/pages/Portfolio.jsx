@@ -313,18 +313,21 @@ const Portfolio = () => {
         return (
           <td key="image" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             {(() => {
-              const sellCondition = String(asset['จะทำการขายโดย'] || asset['เงื่อนไขการขาย'] || '');
-              const hasWarning = sellCondition.includes('ติดจำนอง') || sellCondition.includes('สำเนา') || sellCondition.includes('ตามโฉนด');
-              
+              const assetStr = JSON.stringify(asset);
               let warningText = '';
-              if (sellCondition.includes('ติดจำนอง') && (sellCondition.includes('สำเนา') || sellCondition.includes('ตามโฉนด'))) {
-                warningText = 'ติดจำนอง / ' + (sellCondition.includes('สำเนา') ? 'สำเนา' : 'ตามโฉนด');
-              } else if (sellCondition.includes('ติดจำนอง')) {
+              let hasWarning = false;
+              if (assetStr.includes('ติดจำนอง') && (assetStr.includes('สำเนา') || assetStr.includes('ตามโฉนด'))) {
+                warningText = 'ติดจำนอง / ' + (assetStr.includes('สำเนา') ? 'สำเนา' : 'ตามโฉนด');
+                hasWarning = true;
+              } else if (assetStr.includes('ติดจำนอง')) {
                 warningText = 'ติดจำนอง';
-              } else if (sellCondition.includes('สำเนา')) {
+                hasWarning = true;
+              } else if (assetStr.includes('สำเนา')) {
                 warningText = 'ขายตามสำเนา';
-              } else if (sellCondition.includes('ตามโฉนด')) {
+                hasWarning = true;
+              } else if (assetStr.includes('โฉนด') || assetStr.includes('ตามโฉนด')) {
                 warningText = 'ขายตามโฉนด';
+                hasWarning = true;
               }
 
               return (
@@ -541,7 +544,7 @@ const Portfolio = () => {
         );
       case 'place':
         return (
-          <td key="place" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="place" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>
               {getShortLocation(asset['สถานที่จำหน่าย'])}
             </div>
@@ -636,7 +639,7 @@ const Portfolio = () => {
         );
       case 'deposit':
         return (
-          <td key="deposit" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#3b82f6' }}>
+          <td key="deposit" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#3b82f6' }}>
             {(() => {
               const dep = Number(String(asset['วางหลักประกันเป็นจำนวน'] || '0').replace(/,/g, ''));
               return dep > 0 ? formatPrice(dep) : '-';
@@ -651,13 +654,13 @@ const Portfolio = () => {
         );
       case 'marketPrice':
         return (
-          <td key="marketPrice" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right' }}>
+          <td key="marketPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right' }}>
             {formatPrice(invData.marketPrice || invData.resalePrice)}
           </td>
         );
       case 'winningPrice':
         return (
-          <td key="winningPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : 'var(--primary-color)' }}>
+          <td key="winningPrice" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : 'var(--primary-color)' }}>
             {formatPrice(finalTarget)}
             {finalRoi !== undefined && (
               <div style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: 600, marginTop: '0.25rem' }}>
@@ -680,7 +683,7 @@ const Portfolio = () => {
         );
       case 'status':
         return (
-          <td key="status" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }} onClick={(e) => e.stopPropagation()}>
+          <td key="status" className="mobile-secondary" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.85rem' }}>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <select 
