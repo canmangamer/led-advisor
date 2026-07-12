@@ -628,9 +628,10 @@ body {
   .top-header {
     height: auto;
     padding: 1rem;
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .header-actions {
@@ -677,9 +678,7 @@ body {
     align-items: stretch !important;
     gap: 10px !important;
   }
-  .asset-modal-mobile .quick-actions-google > a, 
-  .asset-modal-mobile .quick-actions-google > div,
-  .asset-modal-mobile .quick-actions-google > button {
+  .asset-modal-mobile .quick-actions-google > * {
     width: 100% !important;
     box-sizing: border-box;
   }

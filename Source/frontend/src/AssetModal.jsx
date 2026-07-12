@@ -507,7 +507,7 @@ export const AssetModal = ({ asset: initialAsset, onClose, onFavoriteToggle, onP
           {asset['Google Map Link'] && (
             <a href={asset['Google Map Link']} target="_blank" rel="noreferrer" className="btn-google-chip" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px 18px', backgroundColor: '#ffffff', border: '1px solid #dadce0', borderRadius: '24px', color: '#3c4043', cursor: 'pointer', transition: 'all 0.2s', textDecoration: 'none' }}>
               <MapPin size={20} style={{ color: '#34a853' }}/>
-              <span style={{ fontSize: '0.95rem', fontWeight: 500 }}>G-Maps</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: 500 }}>Google MAP</span>
             </a>
           )}
 
