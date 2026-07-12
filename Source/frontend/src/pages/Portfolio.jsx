@@ -322,7 +322,7 @@ const Portfolio = () => {
               }
 
               return (
-                <div style={{ position: 'relative', width: '140px', height: '140px' }}>
+                <div className="portfolio-image-wrapper" style={{ position: 'relative', width: '140px', height: '140px' }}>
                   {asset['พาธรูประบบ (landpicture)'] ? (
                     <img 
                       src={getImageUrl(asset['พาธรูประบบ (landpicture)'])} 
@@ -336,7 +336,7 @@ const Portfolio = () => {
                     </div>
                   )}
                   {hasWarning && (
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'rgba(220, 38, 38, 0.9)', color: 'white', fontSize: '0.75rem', fontWeight: 600, padding: '4px', textAlign: 'center', borderTopLeftRadius: '6px', borderTopRightRadius: '6px', zIndex: 10, boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                    <div className="image-warning" style={{ position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'rgba(220, 38, 38, 0.9)', color: 'white', fontSize: '0.75rem', fontWeight: 600, padding: '4px', textAlign: 'center', borderTopLeftRadius: '6px', borderTopRightRadius: '6px', zIndex: 10, boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
                       {warningText}
                     </div>
                   )}

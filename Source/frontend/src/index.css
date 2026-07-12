@@ -813,4 +813,27 @@ body {
     padding-bottom: 0.25rem;
     border-bottom: 1px dashed var(--border-color);
   }
+  
+  /* Hero Image styling for mobile cards */
+  .portfolio-table td[data-label="รูป"] {
+    padding: 0 !important;
+    border-bottom: none !important;
+  }
+  .portfolio-table td[data-label="รูป"]::before {
+    display: none !important;
+  }
+  .portfolio-image-wrapper {
+    width: 100% !important;
+    height: 200px !important;
+    border-radius: 8px 8px 0 0 !important;
+  }
+  .portfolio-image-wrapper img {
+    border-radius: 8px 8px 0 0 !important;
+    border: none !important;
+  }
+  .portfolio-image-wrapper .image-warning {
+    border-radius: 8px 8px 0 0 !important;
+    font-size: 0.85rem !important;
+    padding: 8px !important;
+  }
 }
