@@ -795,24 +795,22 @@ body {
     padding-bottom: 0.5rem;
   }
   .portfolio-table td {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 0.5rem 1rem !important;
+    display: block !important;
+    padding: 0.75rem 1rem !important;
     border-bottom: 1px solid #f1f5f9;
-    min-height: 40px;
-    text-align: right !important;
+    text-align: left !important;
   }
   .portfolio-table td:last-child {
     border-bottom: none;
   }
   .portfolio-table td::before {
     content: attr(data-label);
-    font-weight: 600;
-    min-width: 120px;
-    color: var(--text-secondary);
+    display: block;
+    font-weight: 700;
+    color: var(--primary-color);
     font-size: 0.85rem;
-    text-align: left;
-    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px dashed var(--border-color);
   }
 }
