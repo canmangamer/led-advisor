@@ -901,7 +901,7 @@ function Dashboard() {
                 style={{ display: 'none', background: 'var(--primary-color)', color: 'white', border: 'none', padding: '0.4rem 0.75rem', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', alignItems: 'center', gap: '4px' }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                กรองข้อมูล
+                <span className="desktop-only">กรองข้อมูล</span>
               </button>
               <h2 className="title" style={{ fontSize: '1.75rem', margin: 0 }}>รายการทรัพย์สินรอการขาย</h2>
             </div>
@@ -1109,16 +1109,47 @@ function Dashboard() {
                             }
                             return null;
                           })()}
-                          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-                            <button className="btn btn-primary" style={{ flex: 1, padding: '0.25rem' }} onClick={() => setSelectedAsset(asset)}>
-                              ดูรายละเอียดทั้งหมด
-                            </button>
-                            <button className="btn btn-outline" title="Portfolio" style={{ color: asset.is_portfolio ? 'var(--primary-color)' : 'inherit', borderColor: asset.is_portfolio ? 'var(--primary-color)' : 'var(--border-color)', padding: '0.25rem 0.5rem', marginRight: '0.5rem' }} onClick={(e) => togglePortfolio(asset, e)}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                              <button className="btn btn-primary" style={{ flex: 1, padding: '0.25rem' }} onClick={() => setSelectedAsset(asset)}>
+                                ดูรายละเอียดทั้งหมด
+                              </button>
+                              <button className="btn btn-outline" title="Portfolio" style={{ color: asset.is_portfolio ? 'var(--primary-color)' : 'inherit', borderColor: asset.is_portfolio ? 'var(--primary-color)' : 'var(--border-color)', padding: '0.25rem 0.5rem' }} onClick={(e) => togglePortfolio(asset, e)}>
                                 <Briefcase fill={asset.is_portfolio ? 'currentColor' : 'none'} size={18} />
                               </button>
-<button className="btn btn-outline" style={{ color: asset.is_favorite ? 'var(--danger-color)' : 'inherit', borderColor: asset.is_favorite ? 'var(--danger-color)' : 'var(--border-color)', padding: '0.25rem 0.5rem' }} onClick={(e) => toggleFavorite(asset, e)}>
-                              <Heart fill={asset.is_favorite ? 'currentColor' : 'none'} size={18} />
-                            </button>
+                              <button className="btn btn-outline" style={{ color: asset.is_favorite ? 'var(--danger-color)' : 'inherit', borderColor: asset.is_favorite ? 'var(--danger-color)' : 'var(--border-color)', padding: '0.25rem 0.5rem' }} onClick={(e) => toggleFavorite(asset, e)}>
+                                <Heart fill={asset.is_favorite ? 'currentColor' : 'none'} size={18} />
+                              </button>
+                            </div>
+                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                              {asset['Google Map Link'] && (
+                                <a href={asset['Google Map Link']} target="_blank" rel="noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #dadce0', color: '#34a853', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', transition: 'all 0.2s' }} title="Google Maps" onClick={(e) => e.stopPropagation()}>
+                                  <MapPin size={18} />
+                                </a>
+                              )}
+                              {asset['LandsMaps URL'] && (
+                                <a href={asset['LandsMaps URL']} target="_blank" rel="noreferrer" style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #dadce0', color: '#fbbc04', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', transition: 'all 0.2s' }} title="LandsMaps" onClick={(e) => e.stopPropagation()}>
+                                  <MapIcon size={18} />
+                                </a>
+                              )}
+                              <LEDFormGenerator
+                                asset={asset}
+                                type="asset_details"
+                                className=""
+                                style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #dadce0', color: '#1a73e8', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', cursor: 'pointer', transition: 'all 0.2s', padding: 0 }}
+                                title="ประกาศ LED"
+                              >
+                                <Landmark size={18} />
+                              </LEDFormGenerator>
+                              <LEDFormGenerator
+                                asset={asset}
+                                type="auction_history"
+                                style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #dadce0', color: '#ea4335', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', cursor: 'pointer', transition: 'all 0.2s', padding: 0 }}
+                                title="ประวัติประมูล"
+                              >
+                                <Calendar size={18} />
+                              </LEDFormGenerator>
+                            </div>
                           </div>
                         </div>
                       </Popup>
@@ -1177,6 +1208,27 @@ function Dashboard() {
                           </div>
                         )}
                         
+                        {/* Floating Actions Overlay (Mobile) */}
+                        <div className="mobile-only-btn" style={{ position: 'absolute', top: '10px', right: '10px', flexDirection: 'column', gap: '8px', zIndex: 5 }}>
+                          <button 
+                            style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.95)', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: asset.is_favorite ? 'var(--danger-color)' : '#64748b', cursor: 'pointer' }} 
+                            onClick={(e) => { e.stopPropagation(); toggleFavorite(asset, e); }}
+                          >
+                            <Heart fill={asset.is_favorite ? 'currentColor' : 'none'} size={18} />
+                          </button>
+                          {asset['Google Map Link'] && (
+                            <a 
+                              href={asset['Google Map Link']} 
+                              target="_blank" 
+                              rel="noreferrer" 
+                              style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.95)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#34a853', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }} 
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <MapPin size={18} />
+                            </a>
+                          )}
+                        </div>
+
                         {/* Status Overlay */}
                         <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
                           {String(asset['ที่ดิน (ประเภทเอกสาร)'] || '').includes('สำเนา') && (

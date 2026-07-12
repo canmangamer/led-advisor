@@ -678,7 +678,8 @@ body {
     align-items: stretch !important;
     gap: 10px !important;
   }
-  .asset-modal-mobile .quick-actions-google > * {
+  .asset-modal-mobile .quick-actions-google > *,
+  .asset-modal-mobile .quick-actions-google .btn-google-chip {
     width: 100% !important;
     box-sizing: border-box;
   }
