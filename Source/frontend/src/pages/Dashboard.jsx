@@ -709,11 +709,11 @@ function Dashboard() {
             <option value="">อำเภอ/เขตทั้งหมด</option>
             {districtsList.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
-          <select className="input-field" value={subDistrict} onChange={e => setSubDistrict(e.target.value)}>
+          <select className="input-field" style={{ marginTop: '0.5rem' }} value={subDistrict} onChange={e => setSubDistrict(e.target.value)}>
             <option value="">แขวง/ตำบลทั้งหมด</option>
             {subDistrictsList.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
-          <select className="input-field" value={auctionLocation} onChange={e => setAuctionLocation(e.target.value)}>
+          <select className="input-field" style={{ marginTop: '0.5rem' }} value={auctionLocation} onChange={e => setAuctionLocation(e.target.value)}>
             <option value="">สถานที่จัดประมูล (ทั้งหมด)</option>
             <option value="บางขุนนนท์">กรมบังคับคดี บางขุนนนท์ (อาคารอสีติพรรษ)</option>
             <option value="สามย่านมิตรทาวน์">สามย่านมิตรทาวน์</option>

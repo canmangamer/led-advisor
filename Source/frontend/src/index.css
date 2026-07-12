@@ -604,8 +604,8 @@ body {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 85%;
-    max-width: 320px;
+    width: 100%;
+    max-width: none;
     height: 100vh;
     max-height: none;
     z-index: 2000;
@@ -618,7 +618,19 @@ body {
   }
 
   .mobile-filter-close {
-    display: block !important;
+    display: flex !important;
+    position: fixed !important;
+    top: 15px !important;
+    right: 15px !important;
+    background-color: white !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+    z-index: 10000 !important;
+    font-size: 1.5rem !important;
   }
 
   .mobile-filter-open {
