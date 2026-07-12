@@ -14,6 +14,7 @@ import UserManagement from './pages/admin/UserManagement';
 import DataAnalytics from './pages/admin/DataAnalytics';
 import PaymentDashboard from './pages/admin/PaymentDashboard';
 import ApiManagement from './pages/admin/ApiManagement';
+import { PwaInstallButton } from './components/PwaInstallButton';
 
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { useContext, useEffect, useState } from 'react';
@@ -54,6 +55,7 @@ const AppContent = () => {
         <div className="header-actions">
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <PwaInstallButton />
               <Link 
                 to="/" 
                 style={{ boxSizing: 'border-box', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', color: '#059669', backgroundColor: '#ecfdf5', border: '1px solid #059669', padding: '0 10px', borderRadius: '100px', fontWeight: 500, fontSize: '13px', textDecoration: 'none', transition: 'background-color 0.2s' }}
@@ -113,6 +115,7 @@ const AppContent = () => {
             </div>
           ) : (
             <>
+              <PwaInstallButton />
               <button 
                 onClick={() => navigate('/pricing')}
                 style={{ backgroundColor: '#fbbf24', color: '#78350f', border: 'none', padding: '0.4rem 1.25rem', borderRadius: '20px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
