@@ -305,7 +305,7 @@ const Portfolio = () => {
     switch(col.id) {
       case 'image':
         return (
-          <td key="image" style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="image" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             {(() => {
               const sellCondition = String(asset['จะทำการขายโดย'] || asset['เงื่อนไขการขาย'] || '');
               const hasWarning = sellCondition.includes('ติดจำนอง') || sellCondition.includes('สำเนา') || sellCondition.includes('ตามโฉนด');
@@ -347,7 +347,7 @@ const Portfolio = () => {
         );
       case 'asset':
         return (
-          <td key="asset" style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="asset" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             <div style={{ fontWeight: 600, color: 'var(--primary-color)', marginBottom: '0.25rem', lineHeight: '1.4', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
               {editingAssetId === asset.id ? (
                 <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center', width: '100%' }}>
@@ -414,7 +414,7 @@ const Portfolio = () => {
         );
       case 'auctionDate':
         return (
-          <td key="auctionDate" style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="auctionDate" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             {(() => {
               const daysLeft = calculateDaysLeft(asset._auctionTime);
               let daysLeftText = '';
@@ -522,7 +522,7 @@ const Portfolio = () => {
         );
       case 'place':
         return (
-          <td key="place" style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="place" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>
               {getShortLocation(asset['สถานที่จำหน่าย'])}
             </div>
@@ -617,7 +617,7 @@ const Portfolio = () => {
         );
       case 'deposit':
         return (
-          <td key="deposit" style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#3b82f6' }}>
+          <td key="deposit" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#3b82f6' }}>
             {(() => {
               const dep = Number(String(asset['วางหลักประกันเป็นจำนวน'] || '0').replace(/,/g, ''));
               return dep > 0 ? formatPrice(dep) : '-';
@@ -626,19 +626,19 @@ const Portfolio = () => {
         );
       case 'startPrice':
         return (
-          <td key="startPrice" style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#f59e0b' }}>
+          <td key="startPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 500, color: '#f59e0b' }}>
             {formatPrice(getExpectedStartingPrice(asset))}
           </td>
         );
       case 'marketPrice':
         return (
-          <td key="marketPrice" style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right' }}>
+          <td key="marketPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right' }}>
             {formatPrice(invData.marketPrice || invData.resalePrice)}
           </td>
         );
       case 'winningPrice':
         return (
-          <td key="winningPrice" style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : 'var(--primary-color)' }}>
+          <td key="winningPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : 'var(--primary-color)' }}>
             {formatPrice(finalTarget)}
             {finalRoi !== undefined && (
               <div style={{ fontSize: '0.8rem', color: '#10b981', fontWeight: 600, marginTop: '0.25rem' }}>
@@ -649,7 +649,7 @@ const Portfolio = () => {
         );
       case 'walkawayPrice':
         return (
-          <td key="walkawayPrice" style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : '#ef4444' }}>
+          <td key="walkawayPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'right', fontWeight: 700, color: strikeThrough ? 'inherit' : '#ef4444' }}>
             {formatPrice(finalWalkaway)}
             {(invData.marketPrice || invData.resalePrice) && finalWalkaway && (() => {
                if (walkawayRoi !== undefined) {
@@ -661,7 +661,7 @@ const Portfolio = () => {
         );
       case 'status':
         return (
-          <td key="status" style={{ padding: '1rem', verticalAlign: 'top' }} onClick={(e) => e.stopPropagation()}>
+          <td key="status" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.85rem' }}>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <select 
@@ -683,7 +683,7 @@ const Portfolio = () => {
         );
       case 'closedPrice':
         return (
-          <td key="closedPrice" style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
+          <td key="closedPrice" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -709,7 +709,7 @@ const Portfolio = () => {
         );
       case 'sellBy':
         return (
-          <td key="sellBy" style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
+          <td key="sellBy" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
             {(() => {
               const val = asset['จะทำการขายโดย'] || asset['เงื่อนไขการขาย'];
               if (!val) return '-';
@@ -723,7 +723,7 @@ const Portfolio = () => {
         );
       case 'docType':
         return (
-          <td key="docType" style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
+          <td key="docType" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem' }}>
             {(() => {
               const val = asset['ที่ดิน (ประเภทเอกสาร)'] || asset['ประเภททรัพย์'];
               if (!val) return '-';
@@ -733,19 +733,19 @@ const Portfolio = () => {
         );
       case 'plaintiff':
         return (
-          <td key="plaintiff" style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
+          <td key="plaintiff" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
             {asset['โจทก์'] || '-'}
           </td>
         );
       case 'remark':
         return (
-          <td key="remark" style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
+          <td key="remark" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top', fontSize: '0.85rem', color: '#202124' }}>
             {asset['หมายเหตุ'] || '-'}
           </td>
         );
       case 'note':
         return (
-          <td key="note" style={{ padding: '1rem', verticalAlign: 'top' }}>
+          <td key="note" data-label={col.label} style={{ padding: '1rem', verticalAlign: 'top' }}>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
               {asset.notes || '-'}
             </div>
@@ -812,7 +812,7 @@ const Portfolio = () => {
       ) : (
         <>
         <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'auto', backgroundColor: 'var(--bg-white)', borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '100%' }}>
+          <table className="portfolio-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '100%' }}>
             <thead style={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
               <tr>
                 <th style={{ padding: '0.75rem 1rem', fontWeight: 500, color: '#5f6368', fontSize: '0.875rem', minWidth: '40px', borderBottom: '1px solid #dadce0' }}></th>

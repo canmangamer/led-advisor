@@ -773,4 +773,46 @@ body {
     justify-content: center !important;
     z-index: 10000 !important;
   }
+
+  .portfolio-table {
+    display: block;
+    width: 100%;
+  }
+  .portfolio-table thead {
+    display: none;
+  }
+  .portfolio-table tbody, .portfolio-table tr {
+    display: block;
+    width: 100%;
+  }
+  .portfolio-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  .portfolio-table td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0.5rem 1rem !important;
+    border-bottom: 1px solid #f1f5f9;
+    min-height: 40px;
+    text-align: right !important;
+  }
+  .portfolio-table td:last-child {
+    border-bottom: none;
+  }
+  .portfolio-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    min-width: 120px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: left;
+    margin-right: 1rem;
+  }
 }
