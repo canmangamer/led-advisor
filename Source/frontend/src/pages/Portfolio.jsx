@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, ArrowLeft, Trash2, ArrowUp, ArrowDown, Star, Phone, Layout, Video, Calendar, CalendarPlus, Globe, MonitorSmartphone, AlertTriangle, Users, Scale, Gavel, Edit2, Check, X, Image } from 'lucide-react';
+import { Briefcase, ArrowLeft, Trash2, ArrowUp, ArrowDown, Star, Phone, Layout, Video, Calendar, CalendarPlus, Globe, MonitorSmartphone, AlertTriangle, Users, Scale, Gavel, Edit2, Check, X, Image, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AssetModal } from '../AssetModal';
 
 const Portfolio = () => {
@@ -967,7 +967,7 @@ const Portfolio = () => {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem', padding: '0 0.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>แสดง</span>
+            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}><span className="desktop-only">แสดง</span></span>
             <select 
               value={itemsPerPage} 
               onChange={(e) => { setItemsPerPage(Number(e.target.value)); setCurrentPage(1); }}
@@ -978,20 +978,20 @@ const Portfolio = () => {
               <option value={50}>50</option>
               <option value={100}>100</option>
             </select>
-            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>รายการต่อหน้า</span>
+            <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}><span className="desktop-only">รายการต่อหน้า</span></span>
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-              หน้า {currentPage} จาก {Math.ceil(sortedAssets.length / itemsPerPage) || 1}
+              <span className="desktop-only">หน้า</span> {currentPage} <span className="desktop-only">จาก</span> <span className="mobile-only">/</span> {Math.ceil(sortedAssets.length / itemsPerPage) || 1}
             </span>
             <div style={{ display: 'flex', gap: '0.25rem' }}>
               <button 
                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
-                style={{ padding: '4px 12px', borderRadius: '4px', border: '1px solid var(--border-color)', backgroundColor: currentPage === 1 ? '#f1f5f9' : '#ffffff', color: currentPage === 1 ? '#94a3b8' : 'var(--text-primary)', cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 12px', borderRadius: '4px', border: '1px solid var(--border-color)', backgroundColor: currentPage === 1 ? '#f1f5f9' : '#ffffff', color: currentPage === 1 ? '#94a3b8' : 'var(--text-primary)', cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
               >
-                ก่อนหน้า
+                <ChevronLeft size={16} /> <span className="desktop-only" style={{ marginLeft: '4px' }}>ก่อนหน้า</span>
               </button>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <input 
@@ -1013,9 +1013,9 @@ const Portfolio = () => {
               <button 
                 onClick={() => setCurrentPage(prev => Math.min(Math.ceil(sortedAssets.length / itemsPerPage) || 1, prev + 1))}
                 disabled={currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1)}
-                style={{ padding: '4px 12px', borderRadius: '4px', border: '1px solid var(--border-color)', backgroundColor: currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1) ? '#f1f5f9' : '#ffffff', color: currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1) ? '#94a3b8' : 'var(--text-primary)', cursor: currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1) ? 'not-allowed' : 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px 12px', borderRadius: '4px', border: '1px solid var(--border-color)', backgroundColor: currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1) ? '#f1f5f9' : '#ffffff', color: currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1) ? '#94a3b8' : 'var(--text-primary)', cursor: currentPage >= (Math.ceil(sortedAssets.length / itemsPerPage) || 1) ? 'not-allowed' : 'pointer' }}
               >
-                ถัดไป
+                <span className="desktop-only" style={{ marginRight: '4px' }}>ถัดไป</span> <ChevronRight size={16} />
               </button>
             </div>
           </div>
