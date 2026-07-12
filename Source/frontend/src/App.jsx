@@ -158,19 +158,21 @@ const AppContent = () => {
         </Routes>
       </div>
 
-      {/* FOOTER */}
-      <footer className="footer-area">
-        <div className="footer-links">
-          <Link to="/">หน้าแรก</Link>
-          <Link to="/about">เกี่ยวกับเรา</Link>
-          <Link to="/terms">เงื่อนไขการให้บริการ</Link>
-          <Link to="/privacy">นโยบายความเป็นส่วนตัว</Link>
-          <Link to="/contact">ติดต่อทีมงาน</Link>
-        </div>
-        <div>
-          &copy; {new Date().getFullYear()} YokPai - แพลตฟอร์มวิเคราะห์ประมูลอสังหาฯ สำหรับนักลงทุนตัวจริง. All rights reserved.
-        </div>
-      </footer>
+      {/* FOOTER - Only show on public pages to keep app workspace clean */}
+      {!user && (
+        <footer className="footer-area">
+          <div className="footer-links">
+            <Link to="/">หน้าแรก</Link>
+            <Link to="/about">เกี่ยวกับเรา</Link>
+            <Link to="/terms">เงื่อนไขการให้บริการ</Link>
+            <Link to="/privacy">นโยบายความเป็นส่วนตัว</Link>
+            <Link to="/contact">ติดต่อทีมงาน</Link>
+          </div>
+          <div style={{ opacity: 0.7, fontSize: '0.8rem', marginTop: '0.5rem' }}>
+            &copy; {new Date().getFullYear()} YokPai - แพลตฟอร์มวิเคราะห์ประมูลอสังหาฯ สำหรับนักลงทุนตัวจริง. All rights reserved.
+          </div>
+        </footer>
+      )}
     </div>
   );
 };

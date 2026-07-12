@@ -903,7 +903,7 @@ function Dashboard() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
                 <span className="desktop-only">กรองข้อมูล</span>
               </button>
-              <h2 className="title" style={{ fontSize: '1.75rem', margin: 0 }}>รายการทรัพย์สินรอการขาย</h2>
+              <h2 className="title" style={{ fontSize: '1.75rem', margin: 0, display: 'none' }}>รายการทรัพย์สินรอการขาย</h2>
             </div>
             <p style={{ color: 'var(--text-color)', opacity: 0.8, margin: 0 }}>
               พบทรัพย์ทั้งหมด <strong>{totalItems}</strong> รายการ 
@@ -931,7 +931,7 @@ function Dashboard() {
             </div>
 
             <button className={`btn ${favoritesOnly ? 'btn-danger' : 'btn-outline'}`} onClick={() => setFavoritesOnly(!favoritesOnly)}>
-              <Heart fill={favoritesOnly ? 'currentColor' : 'none'} size={18} /> {favoritesOnly ? 'ดูทั้งหมด' : 'รายการโปรด'}
+              <Heart fill={favoritesOnly ? 'currentColor' : 'none'} size={18} /> {favoritesOnly ? 'ดูทั้งหมด' : 'ถูกใจ'}
             </button>
             <div style={{ display: 'flex', backgroundColor: 'var(--border-color)', borderRadius: 'var(--radius-md)', padding: '2px' }}>
               <button className="btn" style={{ backgroundColor: viewMode === 'list' ? 'var(--card-bg)' : 'transparent', boxShadow: viewMode === 'list' ? 'var(--shadow-sm)' : 'none', color: viewMode === 'list' ? 'var(--primary-color)' : 'inherit', border: 'none' }} onClick={() => setViewMode('list')}>
