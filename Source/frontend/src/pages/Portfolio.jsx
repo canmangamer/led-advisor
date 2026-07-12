@@ -483,7 +483,9 @@ const Portfolio = () => {
 ลิงก์ประกาศ: https://asset.led.go.th/newbidreg/`;
                               const details = encodeURIComponent(detailsText);
                               const location = encodeURIComponent(asset['สถานที่จำหน่าย'] || '');
-                              googleCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(rawTitle)}&dates=${yyyymmdd}/${nextYyyymmdd}&details=${details}&location=${location}`;
+                              
+                              const googleDetails = encodeURIComponent(`บังคับคดี ${asset['ประเภททรัพย์'] || '-'} จ.${asset['จังหวัด'] || '-'}\nโฉนด: ${asset['เลขที่โฉนด'] || '-'}\nติดต่อ: ${asset['โทรศัพท์'] || '-'}`);
+                              googleCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(rawTitle)}&dates=${yyyymmdd}/${nextYyyymmdd}&details=${googleDetails}&location=${location}`;
                             }
                           }
                           return (

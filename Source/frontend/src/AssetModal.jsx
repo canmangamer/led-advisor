@@ -727,7 +727,9 @@ END:VEVENT
 END:VCALENDAR`;
 
                         icsLink = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsData)}`;
-                        googleCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(rawTitle)}&dates=${yyyymmdd}/${nextYyyymmdd}&details=${details}&location=${location}`;
+                        
+                        const googleDetails = encodeURIComponent(`บังคับคดี ${asset['ประเภททรัพย์'] || '-'} จ.${asset['จังหวัด'] || '-'}\nราคาประเมิน: ฿${fmtPrice(asset.price_numeric)}\nโฉนด: ${asset['เลขที่โฉนด'] || '-'}\nติดต่อ: ${asset['โทรศัพท์'] || '-'}`);
+                        googleCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(rawTitle)}&dates=${yyyymmdd}/${nextYyyymmdd}&details=${googleDetails}&location=${location}`;
                       }
                     }
                   }
