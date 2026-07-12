@@ -839,4 +839,26 @@ body {
   .portfolio-table tr:not(.expanded) td.mobile-secondary {
     display: none !important;
   }
+  
+  /* Overlay actions on top of the hero image */
+  .portfolio-actions-td {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 20;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    min-height: 0 !important;
+  }
+  .portfolio-actions-td::before {
+    display: none !important;
+  }
+  .portfolio-actions-container {
+    flex-direction: row !important;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px 8px !important;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
 }

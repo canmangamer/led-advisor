@@ -915,8 +915,8 @@ const Portfolio = () => {
                     }}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = rowBg}
                   >
-                    <td style={{ padding: '0.5rem', verticalAlign: 'top', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'center' }}>
+                    <td className="portfolio-actions-td" style={{ padding: '0.5rem', verticalAlign: 'top', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
+                      <div className="portfolio-actions-container" style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'center' }}>
                         <button 
                           className="btn" 
                           style={{ padding: '4px', color: isStarred ? '#f59e0b' : '#cbd5e1', background: 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }} 
