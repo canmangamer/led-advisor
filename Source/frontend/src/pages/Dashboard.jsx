@@ -915,7 +915,7 @@ function Dashboard() {
             </div>
           </div>
           
-          <div className="mobile-floating-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div className="mobile-floating-actions" style={{ display: showMobileFilters ? 'none' : 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <div className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'white', padding: '0.25rem 0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
               <ArrowDownUp size={16} style={{ color: '#64748b' }} />
               <select className="input-field" style={{ padding: '0.25rem', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '0.875rem', backgroundColor: 'transparent' }} value={sortBy} onChange={e => setSortBy(e.target.value)}>
