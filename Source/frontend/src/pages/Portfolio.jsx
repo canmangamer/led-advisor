@@ -346,6 +346,19 @@ const Portfolio = () => {
                       {warningText}
                     </div>
                   )}
+                  {finalTarget > 0 && (
+                    <div className="mobile-only-flex" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white', padding: '6px 8px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '6px', zIndex: 10, justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ fontSize: '0.75rem', color: '#cbd5e1' }}>เป้าหมาย Win</span>
+                        <span style={{ fontSize: '1rem', fontWeight: 700, color: '#10b981' }}>฿{formatPrice(finalTarget)}</span>
+                      </div>
+                      {finalRoi !== undefined && (
+                        <div style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)', padding: '2px 6px', borderRadius: '4px', border: '1px solid #10b981' }}>
+                          <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#34d399' }}>ROI {finalRoi.toFixed(1)}%</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })()}

@@ -285,7 +285,9 @@ body {
   position: relative;
   z-index: 1; /* fix leaflet overlap */
 }
-.mobile-only-btn {
+.mobile-only-btn,
+.mobile-only,
+.mobile-only-flex {
   display: none;
 }
 
@@ -714,7 +716,10 @@ body {
     display: none !important;
   }
   .mobile-only {
-    display: block !important;
+    display: inline !important;
+  }
+  .mobile-only-flex {
+    display: flex !important;
   }
   .footer-area {
     padding: 1.5rem 1rem !important;
