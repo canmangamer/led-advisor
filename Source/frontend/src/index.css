@@ -714,6 +714,20 @@ body {
   .mobile-only-btn {
     display: flex !important;
   }
+  .mobile-floating-actions {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: white !important;
+    padding: 8px 16px !important;
+    border-radius: 100px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    z-index: 10000 !important;
+    justify-content: center !important;
+    width: auto !important;
+    flex-wrap: nowrap !important;
+  }
   /* Mobile Map Mode Overrides */
   .map-container {
     position: fixed !important;

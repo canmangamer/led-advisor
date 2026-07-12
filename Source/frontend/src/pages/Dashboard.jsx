@@ -904,19 +904,19 @@ function Dashboard() {
                 <span className="desktop-only">กรองข้อมูล</span>
               </button>
               <h2 className="title" style={{ fontSize: '1.75rem', margin: 0, display: 'none' }}>รายการทรัพย์สินรอการขาย</h2>
+              <p style={{ color: 'var(--text-color)', opacity: 0.8, margin: 0, fontWeight: 500 }}>
+                {totalItems} รายการ 
+                {viewMode === 'map' && totalItems > 5000 && (
+                  <span style={{ color: 'var(--danger-color)', marginLeft: '8px', fontWeight: 'bold' }}>
+                    (แสดง 5000)
+                  </span>
+                )}
+              </p>
             </div>
-            <p style={{ color: 'var(--text-color)', opacity: 0.8, margin: 0 }}>
-              พบทรัพย์ทั้งหมด <strong>{totalItems}</strong> รายการ 
-              {viewMode === 'map' && totalItems > 5000 && (
-                <span style={{ color: 'var(--danger-color)', marginLeft: '8px', fontWeight: 'bold' }}>
-                  (แสดงบนแผนที่ 5000 รายการ โปรดระบุเงื่อนไขเพิ่มเติม)
-                </span>
-              )}
-            </p>
           </div>
           
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'white', padding: '0.25rem 0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+          <div className="mobile-floating-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <div className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'white', padding: '0.25rem 0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
               <ArrowDownUp size={16} style={{ color: '#64748b' }} />
               <select className="input-field" style={{ padding: '0.25rem', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '0.875rem', backgroundColor: 'transparent' }} value={sortBy} onChange={e => setSortBy(e.target.value)}>
                 <option value="">เรียงตามความเกี่ยวข้องกัน</option>
@@ -930,15 +930,15 @@ function Dashboard() {
               </select>
             </div>
 
-            <button className={`btn ${favoritesOnly ? 'btn-danger' : 'btn-outline'}`} onClick={() => setFavoritesOnly(!favoritesOnly)}>
-              <Heart fill={favoritesOnly ? 'currentColor' : 'none'} size={18} /> {favoritesOnly ? 'ดูทั้งหมด' : 'ถูกใจ'}
+            <button className={`btn ${favoritesOnly ? 'btn-danger' : 'btn-outline'}`} onClick={() => setFavoritesOnly(!favoritesOnly)} title="ถูกใจ">
+              <Heart fill={favoritesOnly ? 'currentColor' : 'none'} size={18} /> <span className="desktop-only">{favoritesOnly ? 'ดูทั้งหมด' : 'ถูกใจ'}</span>
             </button>
             <div style={{ display: 'flex', backgroundColor: 'var(--border-color)', borderRadius: 'var(--radius-md)', padding: '2px' }}>
-              <button className="btn" style={{ backgroundColor: viewMode === 'list' ? 'var(--card-bg)' : 'transparent', boxShadow: viewMode === 'list' ? 'var(--shadow-sm)' : 'none', color: viewMode === 'list' ? 'var(--primary-color)' : 'inherit', border: 'none' }} onClick={() => setViewMode('list')}>
-                <List size={18} /> รายการ
+              <button className="btn" style={{ backgroundColor: viewMode === 'list' ? 'var(--card-bg)' : 'transparent', boxShadow: viewMode === 'list' ? 'var(--shadow-sm)' : 'none', color: viewMode === 'list' ? 'var(--primary-color)' : 'inherit', border: 'none' }} onClick={() => setViewMode('list')} title="รายการ">
+                <List size={18} /> <span className="desktop-only">รายการ</span>
               </button>
-              <button className="btn" style={{ backgroundColor: viewMode === 'map' ? 'var(--card-bg)' : 'transparent', boxShadow: viewMode === 'map' ? 'var(--shadow-sm)' : 'none', color: viewMode === 'map' ? 'var(--primary-color)' : 'inherit', border: 'none' }} onClick={() => setViewMode('map')}>
-                <MapIcon size={18} /> แผนที่
+              <button className="btn" style={{ backgroundColor: viewMode === 'map' ? 'var(--card-bg)' : 'transparent', boxShadow: viewMode === 'map' ? 'var(--shadow-sm)' : 'none', color: viewMode === 'map' ? 'var(--primary-color)' : 'inherit', border: 'none' }} onClick={() => setViewMode('map')} title="แผนที่">
+                <MapIcon size={18} /> <span className="desktop-only">แผนที่</span>
               </button>
             </div>
           </div>
