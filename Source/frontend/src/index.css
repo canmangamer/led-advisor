@@ -731,4 +731,19 @@ body {
     width: 90% !important;
     padding: 10px 15px !important;
   }
+  
+  .modal-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10000 !important;
+  }
 }

@@ -486,7 +486,7 @@ export const AssetModal = ({ asset: initialAsset, onClose, onFavoriteToggle, onP
               style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px 18px', backgroundColor: '#ffffff', border: '1px solid #dadce0', borderRadius: '24px', color: '#3c4043', cursor: 'pointer', transition: 'all 0.2s', textDecoration: 'none' }}
             >
               <Home size={20} style={{ color: '#1a73e8' }} />
-              <span style={{ fontSize: '0.95rem', fontWeight: 500 }}>ประกาศ LED</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: 500 }}>บังคับคดี</span>
             </LEDFormGenerator>
             {liveUrl && (
               <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="btn-google-chip" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px 18px', backgroundColor: '#ffffff', border: '1px solid #dadce0', borderRadius: '24px', color: '#ef4444', cursor: 'pointer', transition: 'all 0.2s', textDecoration: 'none' }}>
