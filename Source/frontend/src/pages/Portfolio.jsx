@@ -484,7 +484,14 @@ const Portfolio = () => {
                               const details = encodeURIComponent(detailsText);
                               const location = encodeURIComponent(asset['สถานที่จำหน่าย'] || '');
                               
-                              const googleDetails = encodeURIComponent(`บังคับคดี ${asset['ประเภททรัพย์'] || '-'} จ.${asset['จังหวัด'] || '-'}\nโฉนด: ${asset['เลขที่โฉนด'] || '-'}\nติดต่อ: ${asset['โทรศัพท์'] || '-'}`);
+                              const depositFmt = Number(String(asset['วางหลักประกันเป็นจำนวน'] || '').replace(/,/g, '') || 0).toLocaleString();
+                              const fmtPrice = asset.price_numeric ? Number(asset.price_numeric).toLocaleString() : '-';
+                              const googleDetails = encodeURIComponent(`คดี: ${asset['คดีหมายเลขแดงที่']||'-'} ลำดับ: ${asset['ลำดับที่การขาย']||'-'}
+โฉนด: ${asset['เลขที่โฉนด']||'-'} (${asset['เนื้อที่ (ไร่)']||'0'}ร่ ${asset['เนื้อที่ (งาน)']||'0'}ง ${asset['เนื้อที่ (ตร.วา/ตร.ม.)']||'0'}ว)
+อ.${asset['เขต/อำเภอ']||'-'} จ.${asset['จังหวัด']||'-'}
+ประเมิน: ฿${fmtPrice} มัดจำ: ฿${depositFmt}
+โทร: ${asset['โทรศัพท์']||'-'}
+อ้างอิง: https://asset.led.go.th/newbidreg/`);
                               googleCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(rawTitle)}&dates=${yyyymmdd}/${nextYyyymmdd}&details=${googleDetails}&location=${location}`;
                             }
                           }

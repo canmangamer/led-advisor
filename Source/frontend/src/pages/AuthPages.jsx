@@ -71,8 +71,6 @@ export const Login = () => {
 
   return (
     <AuthContainer title="เข้าสู่ระบบ YokPai">
-      <SocialButtons />
-      <Divider />
       {error && <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>{error}</div>}
       <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={handleLogin}>
         <div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import UserProfile from './pages/UserProfile';
@@ -22,6 +22,7 @@ import { Briefcase, Crown, Settings, Heart, LogOut } from 'lucide-react';
 
 const AppContent = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout } = useContext(AuthContext);
   const [allowRegistration, setAllowRegistration] = useState(true);
 
@@ -32,10 +33,14 @@ const AppContent = () => {
       .catch(console.error);
   }, []);
 
+  const hideHeaderPaths = ['/login', '/register'];
+  const showHeader = !hideHeaderPaths.includes(location.pathname);
+
   return (
     <div className="main-layout">
       {/* HEADER */}
-      <header className="top-header">
+      {showHeader && (
+        <header className="top-header">
         <Link to="/" style={{ textDecoration: 'none' }}>
           <div className="brand-area">
             <div className="brand-logo">
@@ -123,9 +128,10 @@ const AppContent = () => {
           )}
         </div>
       </header>
+      )}
 
       {/* DYNAMIC CONTENT (ROUTES) */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
         <Routes>
           <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" replace />} />
               <Route path="/portfolio" element={<Portfolio />} />
